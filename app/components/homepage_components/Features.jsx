@@ -4,9 +4,9 @@ import storm from "../../../public/homepage_images/storm.png";
 
 export default function Features() {
   return (
-    <section className="grid sm:grid-cols-2">
+    <section className="grid md:grid-cols-2">
       <div className="flex bg-accent items-center">
-        <div className=" py-[66px] pl-[10%] w-[560px] text-black-3 max-w-[1440px] mx-auto">
+        <div className=" py-[66px] pl-[10%] max-w-[560px] text-black-3  mx-auto">
           <p>Real-time Weather Data</p>
           <h4 className="text-xl font-semibold py-9">
             Maximize yield by making informed decisions
@@ -25,7 +25,7 @@ export default function Features() {
           width={800}
           src={storm}
           alt="picture of storm"
-          className=" w-[100%] h-[550px]"
+          className="w-[100%] h-[550px] object-cover object-center"
         />
       </div>
     </section>

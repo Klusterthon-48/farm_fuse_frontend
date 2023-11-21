@@ -9,7 +9,7 @@ import Image from "next/image";
 
 export default function Hero() {
   return (
-    <section className="wrapper justify-between text-black-3 pt-16 pb-32 flex-col-reverse md:flex-row">
+    <section className="wrapper justify-between text-black-3 pt-16 lg:pb-32 flex-col-reverse md:flex-row">
       <div className="w-full md:w-[60%]">
         <p className=" bg-accent text-sm font-bold w-44 rounded-md  px-2 text-center py-1 border-t-gray-400">
           Embrace the Future
