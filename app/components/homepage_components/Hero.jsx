@@ -32,25 +32,25 @@ export default function Hero() {
             <p className="font-semibold mt-16">Sponsored partners:</p>
             <div className="flex flex-wrap justify-between text-zinc-400 w-[80%] pt-8">
               <div className="flex flex-wrap items-center">
-                <Image width={20} src={coin_icon} />
+                <Image width={20} src={coin_icon} alt="coin" />
                 <p>CoinMarketCap</p>
               </div>
               <div className="flex flex-wrap items-center">
-                <Image width={20} src={finane_icon} />
+                <Image width={20} src={finane_icon} alt="finance" />
                 <p>finance.au</p>
               </div>
               <div className="flex flex-wrap items-center">
-                <Image width={20} src={bank_icon} />
+                <Image width={20} src={bank_icon} alt="hope" />
                 <p>Bank of Hope</p>
               </div>
             </div>
           </div>
         </div>
         <div className="w-[37%]">
-          <Image src={hero2} />
+          <Image src={hero2} alt="hero" />
           <div className="flex flex-wrap justify-between mt-7">
-            <Image src={hero1} className="w-[48%]" />
-            <Image src={hero} className="w-[48%]" />
+            <Image src={hero1} alt="hero" className="w-[48%]" />
+            <Image src={hero} alt="hero" className="w-[48%]" />
           </div>
         </div>
       </section>

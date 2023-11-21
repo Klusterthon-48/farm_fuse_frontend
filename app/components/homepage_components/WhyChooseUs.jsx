@@ -1,5 +1,5 @@
 import React from "react";
-import { FaCheck} from "react-icons/fa6";
+import { FaCheck } from "react-icons/fa6";
 
 export default function WhyChooseUs() {
   return (
@@ -28,7 +28,6 @@ export default function WhyChooseUs() {
         <div className="flex flex-wrap items-center">
           <div className="bg-accent items-center flex justify-center rounded-full p-2 w-10 h-10">
             <FaCheck className="font-black" />
-          
           </div>
           <h4 className="text-xl font-semibold ms-5">Predictive analytics</h4>
         </div>
@@ -48,8 +47,8 @@ export default function WhyChooseUs() {
           <h4 className="text-xl font-semibold ms-5">Reduced input costs</h4>
         </div>
         <p className="w-[55%]">
-          FarmFuse's smart irrigation and fertilization recommendations help
-          farmers save money on inputs.
+          FarmFuse`&apos;`s smart irrigation and fertilization recommendations
+          help farmers save money on inputs.
         </p>
       </div>
       <hr />
@@ -62,8 +61,8 @@ export default function WhyChooseUs() {
           <h4 className="text-xl font-semibold ms-5">Increased crop yields</h4>
         </div>
         <p className="w-[55%]">
-          FarmFuse's data-driven approach to farming helps farmers optimize
-          their resource usage, resulting in higher yields.
+          FarmFuse`&apos;`s data-driven approach to farming helps farmers
+          optimize their resource usage, resulting in higher yields.
         </p>
       </div>
       <hr />
