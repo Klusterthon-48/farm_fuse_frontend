@@ -13,9 +13,9 @@ export default function Navbar() {
         <div>Variable rate technology</div>
         <div>Predictive analytics</div>
       </div>
-      <div className="flex flex-wrap font-[500] text-black-3  justify-around bg-transparent items-center py-4 text-[16px]">
+      <div className="flex w-[90%] max-w-[1200px] font-[500] text-black-3  justify-between bg-transparent items-center py-4 text-[16px] mx-auto">
         <Link href="/">
-          <Image src={logo} />
+          <Image src={logo} alt="logo" />
         </Link>
         <div className=" ">
           <Link href="/" className="mx-2">
@@ -37,7 +37,9 @@ export default function Navbar() {
 
         <div>
           <button className="me-3 p-2">Log In</button>
-          <button className="bg-primary rounded-md text-white p-2 ms-3">Sign Up</button>
+          <button className="bg-primary rounded-md text-white p-2 ms-3">
+            Sign Up
+          </button>
         </div>
       </div>
     </main>
