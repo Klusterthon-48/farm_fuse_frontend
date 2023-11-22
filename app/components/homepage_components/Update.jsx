@@ -7,14 +7,15 @@ import startup from "../../../public/homepage_images/startup.png";
 
 export default function Update() {
   return (
-    <main className="max-w-[1200px] mx-auto w-[90%]">
-      <section className="flex flex-wrap justify-between p-10 ">
+    <section className="max-w-[1200px] mx-auto w-[90%] my-[80px] md:my-[150px]">
+      <div className="flex flex-wrap justify-between pb-10 ">
         <h1 className="text-3xl font-semibold text-black-3">Latest Updates</h1>
         <Link href="#" className="font-bold text-black-3">
           View all Posts
         </Link>
-      </section>
-      <section className="grid sm:grid-cols-3 gap-6 mx-32">
+      </div>
+      {/* <div className="grid md:grid-cols-3 gap-6 mx-auto max-w-[900px]"> */}
+      <div className="flex flex-col md:flex-row gap-6 items-stretch mx-auto max-w-[900px]">
         <Post
           src={farmer}
           title={"Enhanced Weather Integration"}
@@ -39,7 +40,7 @@ export default function Update() {
             "We're thrilled to introduce our Precision Farming Forum, a space for farmers, agronomists, and professionals to..."
           }
         />
-      </section>
-    </main>
+      </div>
+    </section>
   );
 }

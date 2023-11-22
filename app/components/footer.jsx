@@ -7,22 +7,24 @@ import { BiLogoLinkedin, BiLogoFacebook, BiLogoTwitter } from "react-icons/bi";
 const Footer = () => {
   return (
     <div className="bg-primary mt-[50px]">
-      <div className=" max-w-[1200px] mx-auto w-[90%] pt-[140px] pb-[94px]">
-        <div className="flex justify-between flex-wrap ">
-          {FooterData.map((item, i) => (
-            <div key={i}>
-              <p>{item.title}</p>
-              {item.links.map((dest) => (
-                <div key={dest.link} className="mt-3">
-                  <a href={dest.link} className="opacity-50">
-                    {dest.title}
-                  </a>
-                </div>
-              ))}
-            </div>
-          ))}
-          <div className="bg-secondary w-[400px] p-[42px] rounded-md mt-9 md:-mt-12">
-            <p>Subscribe</p>
+      <div className=" max-w-[1200px] mx-auto w-[90%] pt-[100px] pb-[94px]">
+        <div className="flex flex-col lg:flex-row w-full justify-between lg:items-center">
+          <div className="flex  justify-between flex-wrap lg:w-[50%] gap-16 ">
+            {FooterData.map((item, i) => (
+              <div key={i}>
+                <p>{item.title}</p>
+                {item.links.map((dest) => (
+                  <div key={dest.link} className="mt-3">
+                    <a href={dest.link} className="opacity-50">
+                      {dest.title}
+                    </a>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+          <div className="bg-secondary max-w-[400px] p-[42px] rounded-md my-[50px] lg:my-0">
+            <p className="text-xl">Subscribe</p>
             <div className="flex items-stretch mt-[15px] mb-[20px]">
               <input
                 type="text"
