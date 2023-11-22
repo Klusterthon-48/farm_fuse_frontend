@@ -1,11 +1,10 @@
-import Image from "next/image";
 import Navbar from "./components/Navbar";
 import Hero from "./components/homepage_components/Hero";
 import Features from "./components/homepage_components/Features";
 import WhyChooseUs from "./components/homepage_components/WhyChooseUs";
 import Prediction from "./components/homepage_components/Prediction";
 import Update from "./components/homepage_components/Update";
-import Footer from "./components/Footer";
+import Footer from "./components/footer";
 
 export default function Home() {
   return (

@@ -42,7 +42,7 @@ export default function WhyChooseUs() {
         </div>
       ))}
       <div className="flex justify-center">
-        <button className="bg-primary rounded-md text-white p-6 mb-32 px-10 my-24 text-sm">
+        <button className="bg-primary rounded-md text-white p-6 mb-32 px-10 mt-24 text-sm">
           Get Started
         </button>
       </div>
