@@ -11,7 +11,7 @@ export default function Prediction() {
         className=" w-[100%] h-[550px] object-cover object-center"
       />
       <div className="flex items-center bg-accent">
-        <div className="max-w-[560px]  ml-10 mr-[10%] py-11 md:py-0">
+        <div className="max-w-[560px] ml-[5%]  md:ml-10 mr-[10%] py-11 md:py-0">
           <p>Enhancement of forecasting</p>
           <h4 className="text-xl font-semibold py-9">
             Machine Learning Predictions

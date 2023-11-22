@@ -6,7 +6,7 @@ export default function Features() {
   return (
     <section className="grid md:grid-cols-2">
       <div className="flex bg-accent items-center">
-        <div className=" py-[66px] pl-[10%] max-w-[560px] text-black-3  mx-auto">
+        <div className=" py-[66px]  md:pl-[10%] max-w-[560px] text-black-3 w-[90%] mx-auto">
           <p>Real-time Weather Data</p>
           <h4 className="text-xl font-semibold py-9">
             Maximize yield by making informed decisions

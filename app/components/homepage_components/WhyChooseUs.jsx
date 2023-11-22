@@ -22,8 +22,8 @@ const data = [
 
 export default function WhyChooseUs() {
   return (
-    <section className="text-black-3 my-[52px] w-[90%] max-w-[1200px] mx-auto">
-      <h1 className="text-3xl text-center md:text-left font-semibold mb-5 text-black-3">
+    <section className="text-black-3 my-[90px] md:my-[180px] w-[90%] max-w-[1200px] mx-auto">
+      <h1 className="text-[36px] text-center  md:text-left font-medium mb-11 text-black-3">
         Why Farmers choose FarmFuse
       </h1>
       <hr className="text-black" />
@@ -34,7 +34,7 @@ export default function WhyChooseUs() {
               <div className="bg-accent items-center flex justify-center rounded-full p-2 w-10 h-10  mb-3">
                 <FaCheck className="font-black" />
               </div>
-              <h4 className="text-xl font-semibold ms-5  mb-2">{title}</h4>
+              <h4 className="text-xl font-semibold md:ms-5  mb-2">{title}</h4>
             </div>
             <p className="w-full md:w-[42%] lg:w-[55%]">{text}</p>
           </div>
@@ -42,7 +42,7 @@ export default function WhyChooseUs() {
         </div>
       ))}
       <div className="flex justify-center">
-        <button className="bg-primary rounded-md text-white p-6 mb-32 px-10 mt-24 text-sm">
+        <button className="bg-primary rounded-md text-white    px-14 md:px-20 py-4 md:py-6 mt-24 text-sm">
           Get Started
         </button>
       </div>
