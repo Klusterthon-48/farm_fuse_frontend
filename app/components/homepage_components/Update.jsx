@@ -7,14 +7,14 @@ import startup from "../../../public/homepage_images/startup.png";
 
 export default function Update() {
   return (
-    <main>
-      <section className="flex flex-wrap justify-between p-10">
-        <h1 className="text-3xl font-semibold">Latest Updates</h1>
-        <Link href="#" className="font-bold">
+    <main className="max-w-[1200px] mx-auto w-[90%]">
+      <section className="flex flex-wrap justify-between p-10 ">
+        <h1 className="text-3xl font-semibold text-black-3">Latest Updates</h1>
+        <Link href="#" className="font-bold text-black-3">
           View all Posts
         </Link>
       </section>
-      <section className="grid sm:grid-cols-3 gap-6 px-32">
+      <section className="grid sm:grid-cols-3 gap-6 mx-32">
         <Post
           src={farmer}
           title={"Enhanced Weather Integration"}

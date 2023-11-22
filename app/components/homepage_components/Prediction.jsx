@@ -5,9 +5,13 @@ import plant from "../../../public/homepage_images/plant.png";
 export default function Prediction() {
   return (
     <main className="grid sm:grid-cols-2 text-black-3">
-      <Image src={plant} alt="picture of plant" className="h-[75%] w-[100%]" />
+      <Image
+        src={plant}
+        alt="picture of plant"
+        className=" w-[100%] h-[550px] object-cover object-center"
+      />
       <div className="flex items-center bg-accent">
-        <div className="w-[90%]">
+        <div className="max-w-[560px]  ml-10 mr-[10%] py-11 md:py-0">
           <p>Enhancement of forecasting</p>
           <h4 className="text-xl font-semibold py-9">
             Machine Learning Predictions
