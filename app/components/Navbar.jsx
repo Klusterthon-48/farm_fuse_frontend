@@ -63,7 +63,7 @@ export default function Navbar() {
           <Link onClick={handleShow} href="/" className="mx-2">
             About us
           </Link>
-          <Link href='/login' onClick={handleShow} href="/" className="mx-2 md:hidden">
+          <Link href='/login' onClick={handleShow}  className="mx-2 md:hidden">
             Log In
           </Link>
           <Link
