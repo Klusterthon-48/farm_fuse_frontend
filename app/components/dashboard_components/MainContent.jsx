@@ -31,7 +31,7 @@ export default function MainContent({ selectedItem }) {
         </p>
       </div>
       <section className="flex flex-wrap justify-around">
-        <div className="bg-accent rounded-lg my-5 p-5">
+        <div className="bg-accent rounded-lg my-5 p-3">
           <h3 className="text-lg font-bold mb-2">Farm Overview</h3>
           <div className="border border-zinc-100 my-3"></div>
           <div className="bg-white rounded-full text-sm text-gray3 text-center p-2">
@@ -173,7 +173,7 @@ export default function MainContent({ selectedItem }) {
           </section>
         </div>
 
-        <div className="bg-accent rounded-lg p-5 my-5">
+        <div className="bg-accent rounded-lg p-3 my-5">
           <h3 className="text-lg font-bold mb-2">Quick Links</h3>
           <div className="border border-zinc-100 my-3"></div>
           <div className="mt-2">
