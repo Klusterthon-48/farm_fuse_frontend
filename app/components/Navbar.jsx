@@ -43,6 +43,8 @@ export default function Navbar() {
         <div
           className={`flex flex-col gap-6 absolute items-center right-0 transition-transform duration-200 top-[55px] ${
             showMenu ? "translate-x-0" : "translate-x-full"
+          } ${
+            showMenu ? "flex" : "hidden"
           } bg-accent-1 px-10 pb-10 pt-4  shadow-lg`}
         >
           <button className="flex self-start " onClick={handleShow}>
@@ -63,7 +65,7 @@ export default function Navbar() {
           <Link onClick={handleShow} href="/" className="mx-2">
             About us
           </Link>
-          <Link href='/login' onClick={handleShow}  className="mx-2 md:hidden">
+          <Link href="/login" onClick={handleShow} className="mx-2 md:hidden">
             Log In
           </Link>
           <Link
@@ -78,10 +80,15 @@ export default function Navbar() {
 
         <div className="flex gap-4">
           <div className="hidden md:flex">
-            <button className="me-3 p-2 ">Log In</button>
-            <button className="bg-primary rounded-md text-white p-2 ms-3">
+            <Link href="/login" className="me-3 p-2 ">
+              Log In
+            </Link>
+            <Link
+              href="/signup"
+              className="bg-primary rounded-md text-white p-2 ms-3"
+            >
               Sign Up
-            </button>
+            </Link>
           </div>
           <button className="lg:hidden" onClick={handleShow}>
             <GiHamburgerMenu className="text-2xl" />

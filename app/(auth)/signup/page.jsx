@@ -1,5 +1,3 @@
-
-
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
@@ -50,7 +48,9 @@ export default function Signup() {
                 />
               </div>
               <div className="w-full sm:w-5/12">
-                <p className="text-[#828282] pb-3 uppercase">Confirm Password</p>
+                <p className="text-[#828282] pb-3 uppercase">
+                  Confirm Password
+                </p>
                 <input
                   type="password"
                   placeholder="Confirm your password"
@@ -61,7 +61,7 @@ export default function Signup() {
 
             <div className="my-7 flex items-center">
               <input type="checkbox" />
-              <small className="ms-2 text-gray3">
+              <small className="ms-2 text-grey-3">
                 I Agree to Terms and Privacy
               </small>
             </div>
@@ -71,19 +71,21 @@ export default function Signup() {
               </button>
             </div>
           </form>
-          <p className="text-center text-sm text-gray3">
+          <p className="text-center text-sm text-grey-3">
             Already have an account?
-            <Link href="/login"  className="text-primary underline">
-             Sign in
+            <Link href="/login" className="text-primary underline">
+              Sign in
             </Link>
           </p>
         </div>
-        <div className="bg-primary flex items-center text-white" > 
+        <div className="bg-primary flex items-center text-white">
           <div className="px-5 sm:px-20">
             <p className="text-sm sm:text-base">WELCOME TO</p>
             <h3 className="text-xl sm:text-3xl py-5">Farmfuse</h3>
             <div className="border-b-white w-10 sm:w-20 border mb-5"></div>
-            <small className="text-xs sm:text-sm">Create your account to access the dashboard</small>
+            <small className="text-xs sm:text-sm">
+              Create your account to access the dashboard
+            </small>
           </div>
         </div>
       </section>

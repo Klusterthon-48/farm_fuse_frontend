@@ -6,7 +6,7 @@ import { BiLogoLinkedin, BiLogoFacebook, BiLogoTwitter } from "react-icons/bi";
 
 const Footer = () => {
   return (
-    <div className="bg-primary mt-[50px]">
+    <div className="bg-primary mt-[50px] text-white">
       <div className=" max-w-[1200px] mx-auto w-[90%] pt-[100px] pb-[94px]">
         <div className="flex flex-col lg:flex-row w-full justify-between lg:items-center">
           <div className="flex  justify-between flex-wrap lg:w-[50%] gap-16 ">

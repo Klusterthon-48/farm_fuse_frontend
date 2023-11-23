@@ -28,7 +28,7 @@ export default function Login() {
 
             <div className="my-6 flex items-center">
               <input type="checkbox" />
-              <small className="ms-2 text-gray3">Remember Me</small>
+              <small className="ms-2 text-grey-3">Remember Me</small>
             </div>
             <div className="flex flex-wrap justify-between mb-6">
               <button className="bg-primary rounded-md text-white p-2 px-10 font-bold mb-5">
@@ -41,9 +41,9 @@ export default function Login() {
               </Link>
             </div>
           </form>
-          <p className="text-center text-sm text-gray3">
-            Forget your password? 
-            <a href="#" className="text-primary underline"> 
+          <p className="text-center text-sm text-grey-3">
+            Forget your password?
+            <a href="#" className="text-primary underline">
               Get help signing in
             </a>
           </p>
@@ -55,7 +55,7 @@ export default function Login() {
             <div className="border-b-white w-20 border mb-5"></div>
             <small>Login to access Dashboard</small>
           </div>
-          <Link href='/dashbord'>dashboard</Link>
+          <Link href="/dashboard">dashboard</Link>
         </div>
       </section>
     </main>

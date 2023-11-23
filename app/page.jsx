@@ -8,7 +8,7 @@ import Footer from "./components/footer";
 
 export default function Home() {
   return (
-    <main className="bg-accent-1">
+    <main className="bg-accent-1 overflow-hidden w-screen">
       <Navbar />
       <Hero />
       <Features />

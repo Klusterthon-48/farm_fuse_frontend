@@ -15,7 +15,7 @@ export default function Update() {
         </Link>
       </div>
       {/* <div className="grid md:grid-cols-3 gap-6 mx-auto max-w-[900px]"> */}
-      <div className="flex flex-col md:flex-row gap-6 items-stretch mx-auto max-w-[900px]">
+      <div className="flex flex-col md:flex-row  gap-6 items-stretch mx-auto max-w-[1110px]">
         <Post
           src={farmer}
           title={"Enhanced Weather Integration"}
