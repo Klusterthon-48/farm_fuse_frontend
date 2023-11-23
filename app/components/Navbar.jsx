@@ -43,6 +43,8 @@ export default function Navbar() {
         <div
           className={`flex flex-col gap-6 absolute items-center right-0 transition-transform duration-200 top-[55px] ${
             showMenu ? "translate-x-0" : "translate-x-full"
+          } ${
+            showMenu ? "flex" : "hidden"
           } bg-accent-1 px-10 pb-10 pt-4  shadow-lg`}
         >
           <button className="flex self-start " onClick={handleShow}>

@@ -14,7 +14,7 @@ export default function Hero() {
         <p className=" bg-accent text-sm font-bold w-44 rounded-md  px-2 text-center py-1 border-t-gray-400">
           Embrace the Future
         </p>
-        <h2 className="text-3xl lg:text-5xl font-semibold md:w-[85%] py-7 leading-snug md:leading-normal">
+        <h2 className="text-3xl lg:text-5xl font-semibold md:w-[85%] py-7 leading-snug md:leading-2">
           Optimize Your Crops, Increase Yields, and Reduce Costs
         </h2>
         <p className="w-full md:w-[80%]">
