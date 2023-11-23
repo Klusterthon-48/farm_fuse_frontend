@@ -65,12 +65,12 @@ export default function Navbar() {
           <Link onClick={handleShow} href="/" className="mx-2">
             About us
           </Link>
-          <Link onClick={handleShow} href="/" className="mx-2 md:hidden">
+          <Link href="/login" onClick={handleShow} className="mx-2 md:hidden">
             Log In
           </Link>
           <Link
             onClick={handleShow}
-            href="/"
+            href="/signup"
             className="md:hidden mx-2 p-3 bg-primary rounded-md text-white"
           >
             Sign Up
@@ -80,10 +80,15 @@ export default function Navbar() {
 
         <div className="flex gap-4">
           <div className="hidden md:flex">
-            <button className="me-3 p-2 ">Log In</button>
-            <button className="bg-primary rounded-md text-white p-2 ms-3">
+            <Link href="/login" className="me-3 p-2 ">
+              Log In
+            </Link>
+            <Link
+              href="/signup"
+              className="bg-primary rounded-md text-white p-2 ms-3"
+            >
               Sign Up
-            </button>
+            </Link>
           </div>
           <button className="lg:hidden" onClick={handleShow}>
             <GiHamburgerMenu className="text-2xl" />

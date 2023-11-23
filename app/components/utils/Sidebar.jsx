@@ -16,32 +16,32 @@ import { usePathname } from "next/navigation";
 const navLinks = [
   {
     logo: <GrAppsRounded />,
-    link: "/pages/dashboard",
+    link: "/dashboard",
     title: "Dashboard",
   },
   {
     logo: <GiGreenhouse />,
-    link: "/pages/dashboard/my-farm",
+    link: "/dashboard/my-farm",
     title: "My Farm",
   },
   {
     logo: <TiWeatherPartlySunny />,
-    link: "/pages/dashboard/weather",
+    link: "/dashboard/weather",
     title: "Weather",
   },
   {
     logo: <GrSchedulePlay />,
-    link: "/pages/dashboard/planting-schedule",
+    link: "/dashboard/planting-schedule",
     title: "Planting Schedule",
   },
   {
     logo: <FaRegCalendarCheck />,
-    link: "/pages/dashboard/harvesting-schedule",
+    link: "/dashboard/harvesting-schedule",
     title: "Harvesting Schedule",
   },
   {
     logo: <GrAnalytics />,
-    link: "/pages/dashboard/analytics",
+    link: "/dashboard/analytics",
     title: "Analytics",
   },
 ];
@@ -122,7 +122,9 @@ const Sidebar = () => {
                 <div
                   className={`flex ${
                     toggleSidebar ? "w-fit" : "w-[90%]"
-                  } group-hover:bg-radial link-hover hover:bg-radial items-center gap-2 text-grey-3 border border-transparent z-10 p-3`}
+                  } group-hover:bg-radial ${
+                    path === item.link ? "link-active" : ""
+                  } link-hover hover:bg-radial items-center gap-2 text-grey-3 border border-transparent z-10 p-3`}
                 >
                   <div className="text-2xl">{item.logo}</div>
                   <p className={`${toggleSidebar ? "hidden" : "block"}`}>
