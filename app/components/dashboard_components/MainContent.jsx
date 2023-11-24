@@ -1,13 +1,7 @@
 // MainContent.js
 
 import React from "react";
-import {
-  FaLeaf,
-  FaBolt,
-  FaApple,
-  FaWater,
-  FaNutritionix,
-} from "react-icons/fa";
+import { FaLeaf, FaBolt, FaApple, FaNutritionix } from "react-icons/fa";
 import {
   FaBoltLightning,
   FaBowlFood,
@@ -26,12 +20,12 @@ export default function MainContent({ selectedItem }) {
   return (
     <div className="main-content text-black-3">
       <div className="  flex  justify-center  my-4">
-        <p className="w-64 bg-accent text-center p-2 rounded-full">
+        <p className="w-64 bg-accent-1 border-grey-4 text-center p-2 rounded-full">
           Sunday 12th November, 2023
         </p>
       </div>
       <section className="flex flex-wrap justify-around">
-        <div className="bg-accent rounded-lg my-5 p-3">
+        <div className="bg-accent-1 border-grey-4 rounded-lg my-5 p-3">
           <h3 className="text-lg font-bold mb-2">Farm Overview</h3>
           <div className="border border-zinc-100 my-3"></div>
           <div className="bg-white rounded-full text-sm text-gray3 text-center p-2">
@@ -65,7 +59,7 @@ export default function MainContent({ selectedItem }) {
           </div>
         </div>
 
-        <div className="bg-accent rounded-lg my-5 p-5">
+        <div className="bg-accent-1 border-grey-4 rounded-lg my-5 p-5">
           <h3 className="text-lg font-bold mb-2">Weather Updates</h3>
           <div className="border border-zinc-100 my-3"></div>
           <div className="flex my-11">
@@ -94,7 +88,7 @@ export default function MainContent({ selectedItem }) {
             </div>
           </div>
         </div>
-        <div className="bg-accent rounded-lg p-3 my-5">
+        <div className="bg-accent-1 border-grey-4 rounded-lg p-3 my-5">
           <h3 className="text-lg font-bold mb-2">Soil Quality</h3>
           <div className="border border-zinc-100 my-3"></div>
 
@@ -173,7 +167,7 @@ export default function MainContent({ selectedItem }) {
           </section>
         </div>
 
-        <div className="bg-accent rounded-lg p-3 my-5">
+        <div className="bg-accent-1 border-grey-4 rounded-lg p-3 my-5">
           <h3 className="text-lg font-bold mb-2">Quick Links</h3>
           <div className="border border-zinc-100 my-3"></div>
           <div className="mt-2">
