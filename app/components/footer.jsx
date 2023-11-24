@@ -45,9 +45,9 @@ const Footer = () => {
         <hr className="opacity-[0.2] mt-[26px] mb-[42px]" />
         <div className="flex flex-col md:flex-row justify-between items-center gap-9">
           <Image
-            src="/footer_images/farmfuse-logo.png"
+            src="/footer_images/farmfuse-logo.svg"
             alt="farmfuse logo"
-            width={600}
+            width={200}
             height={100}
             className="w-[200px] h-auto"
           />
