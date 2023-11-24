@@ -37,6 +37,9 @@ export default function Navbar() {
           <Link href="/" className="mx-2">
             About us
           </Link>
+          <Link href="/dashboard" className="mx-2">
+            Dashboard
+          </Link>
         </div>
         {/* Mobile Menu */}
         {/* {showMenu && ( */}

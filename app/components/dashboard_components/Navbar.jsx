@@ -34,11 +34,11 @@ export default function Navbar() {
 
   return (
     <nav className="flex justify-between mt-3 items-center">
-      <div className="flex-col lg:flex-row">
+      <div className="flex gap-4 items-center flex-col lg:flex-row">
         <div>
           <h2 className=" text-3xl lg:text-4xl">Welcome, Smith!</h2>
         </div>
-        <div className="">
+        <div>
           <p>Let&apos;s cultivate success together.</p>
         </div>
       </div>
