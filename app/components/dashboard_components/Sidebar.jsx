@@ -79,25 +79,27 @@ const Sidebar = () => {
       
        h-screen bg-black-2 relative`}
     >
-      <div className="p-[35px]">
-        {toggleSidebar ? (
-          <Image
-            src="/dashboard_images/logo.svg"
-            alt="farmfuse logo"
-            width={50}
-            height={50}
-            // className="block md:hidden"
-          />
-        ) : (
-          <Image
-            src="/dashboard_images/farmfuse-logo.svg"
-            alt="farmfuse logo"
-            width={200}
-            height={200}
-            // className="hidden md:block"
-          />
-        )}
-      </div>
+      <Link href="/">
+        <div className="p-[35px]">
+          {toggleSidebar ? (
+            <Image
+              src="/dashboard_images/logo.svg"
+              alt="farmfuse logo"
+              width={50}
+              height={50}
+              // className="block md:hidden"
+            />
+          ) : (
+            <Image
+              src="/dashboard_images/farmfuse-logo.svg"
+              alt="farmfuse logo"
+              width={200}
+              height={200}
+              // className="hidden md:block"
+            />
+          )}
+        </div>
+      </Link>
       <button onClick={handleToggleSidebar}>
         <div
           className={

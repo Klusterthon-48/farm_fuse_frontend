@@ -1,7 +1,9 @@
 // MainContent.js
 
+"use client";
+
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { FaLeaf, FaBolt, FaApple, FaNutritionix } from "react-icons/fa";
 import {
   FaBoltLightning,
@@ -14,79 +16,90 @@ import {
 } from "react-icons/fa6";
 import Schedule from "../utils/Schedule";
 import Info from "../utils/Info";
+import FarmDetailsModal from "../dashboard_components/FarmDetailsModal";
+
+const plantingScheduleData = [
+  {
+    icon: "/dashboard_images/maize.svg",
+    crop: "lentil",
+    text: "Planting soon! Prepare for [Upcoming Date]",
+  },
+  {
+    icon: "/dashboard_images/maize.svg",
+    crop: "chickpea",
+    text: "Get ready for planting on [Upcoming Date]",
+  },
+  {
+    icon: "/dashboard_images/maize.svg",
+    crop: "maize",
+    text: "Upcoming planting session on [Upcoming Date]",
+  },
+];
+const harvestingScheduleData = [
+  {
+    icon: "/dashboard_images/maize.svg",
+    crop: "lentil",
+    text: "Planting soon! Prepare for [Upcoming Date]",
+  },
+  {
+    icon: "/dashboard_images/maize.svg",
+    crop: "chickpea",
+    text: "Get ready for planting on [Upcoming Date]",
+  },
+  {
+    icon: "/dashboard_images/maize.svg",
+    crop: "maize",
+    text: "Upcoming planting session on [Upcoming Date]",
+  },
+];
+
+const recommendations = [
+  {
+    icon: "/dashboard_images/maize.svg",
+    text: "Consider irrigating before planting",
+  },
+  {
+    icon: "/dashboard_images/maize.svg",
+    text: "Consider irrigating before planting",
+  },
+  {
+    icon: "/dashboard_images/maize.svg",
+    text: "Consider irrigating before planting",
+  },
+];
+
+const tipsData = [
+  {
+    icon: "/dashboard_images/maize.svg",
+    subtitle: "lentil",
+    text: "Planting soon! Prepare for [Upcoming Date]",
+  },
+  {
+    icon: "/dashboard_images/maize.svg",
+    subtitle: "chickpea",
+    text: "Get ready for planting on [Upcoming Date]",
+  },
+  {
+    icon: "/dashboard_images/maize.svg",
+    subtitle: "maize",
+    text: "Upcoming planting session on [Upcoming Date]",
+  },
+];
 
 export default function MainContent({ selectedItem }) {
   const soilMoisturePercentage = 30;
   const phPercentage = 70;
   const nutrientPercentage = 50;
 
-  const plantingScheduleData = [
-    {
-      icon: "/dashboard_images/maize.svg",
-      crop: "lentil",
-      text: "Planting soon! Prepare for [Upcoming Date]",
-    },
-    {
-      icon: "/dashboard_images/maize.svg",
-      crop: "chickpea",
-      text: "Get ready for planting on [Upcoming Date]",
-    },
-    {
-      icon: "/dashboard_images/maize.svg",
-      crop: "maize",
-      text: "Upcoming planting session on [Upcoming Date]",
-    },
-  ];
-  const harvestingScheduleData = [
-    {
-      icon: "/dashboard_images/maize.svg",
-      crop: "lentil",
-      text: "Planting soon! Prepare for [Upcoming Date]",
-    },
-    {
-      icon: "/dashboard_images/maize.svg",
-      crop: "chickpea",
-      text: "Get ready for planting on [Upcoming Date]",
-    },
-    {
-      icon: "/dashboard_images/maize.svg",
-      crop: "maize",
-      text: "Upcoming planting session on [Upcoming Date]",
-    },
-  ];
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  const recommendations = [
-    {
-      icon: "/dashboard_images/maize.svg",
-      text: "Consider irrigating before planting",
-    },
-    {
-      icon: "/dashboard_images/maize.svg",
-      text: "Consider irrigating before planting",
-    },
-    {
-      icon: "/dashboard_images/maize.svg",
-      text: "Consider irrigating before planting",
-    },
-  ];
+  const handleFarmDetails = () => {
+    setIsPopupOpen(true);
+  };
 
-  const tipsData = [
-    {
-      icon: "/dashboard_images/maize.svg",
-      subtitle: "lentil",
-      text: "Planting soon! Prepare for [Upcoming Date]",
-    },
-    {
-      icon: "/dashboard_images/maize.svg",
-      subtitle: "chickpea",
-      text: "Get ready for planting on [Upcoming Date]",
-    },
-    {
-      icon: "/dashboard_images/maize.svg",
-      subtitle: "maize",
-      text: "Upcoming planting session on [Upcoming Date]",
-    },
-  ];
+  const handleClosePopup = () => {
+    setIsPopupOpen(false);
+  };
 
   return (
     <div className="main-content text-black-3">
@@ -239,7 +252,11 @@ export default function MainContent({ selectedItem }) {
         </div>
 
         <div className="bg-accent-1 border-grey-4 rounded-lg p-3 my-5">
-          <h3 className="text-lg font-bold mb-2">Quick Links</h3>
+          <div className="flex justify-between">
+            <h3 className="text-lg font-bold mb-2">Quick Links</h3>
+            <button onClick={handleFarmDetails}>Edit</button>
+          </div>
+          <FarmDetailsModal isOpen={isPopupOpen} onClose={handleClosePopup} />
           <div className="border border-zinc-100 my-3"></div>
           <div className="mt-2">
             <label
