@@ -1,5 +1,6 @@
 // MainContent.js
 
+import Image from "next/image";
 import React from "react";
 import { FaLeaf, FaBolt, FaApple, FaNutritionix } from "react-icons/fa";
 import {
@@ -11,11 +12,81 @@ import {
   FaPlantWilt,
   FaRegLightbulb,
 } from "react-icons/fa6";
+import Schedule from "../utils/Schedule";
+import Info from "../utils/Info";
 
 export default function MainContent({ selectedItem }) {
   const soilMoisturePercentage = 30;
   const phPercentage = 70;
   const nutrientPercentage = 50;
+
+  const plantingScheduleData = [
+    {
+      icon: "/dashboard_images/maize.svg",
+      crop: "lentil",
+      text: "Planting soon! Prepare for [Upcoming Date]",
+    },
+    {
+      icon: "/dashboard_images/maize.svg",
+      crop: "chickpea",
+      text: "Get ready for planting on [Upcoming Date]",
+    },
+    {
+      icon: "/dashboard_images/maize.svg",
+      crop: "maize",
+      text: "Upcoming planting session on [Upcoming Date]",
+    },
+  ];
+  const harvestingScheduleData = [
+    {
+      icon: "/dashboard_images/maize.svg",
+      crop: "lentil",
+      text: "Planting soon! Prepare for [Upcoming Date]",
+    },
+    {
+      icon: "/dashboard_images/maize.svg",
+      crop: "chickpea",
+      text: "Get ready for planting on [Upcoming Date]",
+    },
+    {
+      icon: "/dashboard_images/maize.svg",
+      crop: "maize",
+      text: "Upcoming planting session on [Upcoming Date]",
+    },
+  ];
+
+  const recommendations = [
+    {
+      icon: "/dashboard_images/maize.svg",
+      text: "Consider irrigating before planting",
+    },
+    {
+      icon: "/dashboard_images/maize.svg",
+      text: "Consider irrigating before planting",
+    },
+    {
+      icon: "/dashboard_images/maize.svg",
+      text: "Consider irrigating before planting",
+    },
+  ];
+
+  const tipsData = [
+    {
+      icon: "/dashboard_images/maize.svg",
+      subtitle: "lentil",
+      text: "Planting soon! Prepare for [Upcoming Date]",
+    },
+    {
+      icon: "/dashboard_images/maize.svg",
+      subtitle: "chickpea",
+      text: "Get ready for planting on [Upcoming Date]",
+    },
+    {
+      icon: "/dashboard_images/maize.svg",
+      subtitle: "maize",
+      text: "Upcoming planting session on [Upcoming Date]",
+    },
+  ];
 
   return (
     <div className="main-content text-black-3">
@@ -24,7 +95,7 @@ export default function MainContent({ selectedItem }) {
           Sunday 12th November, 2023
         </p>
       </div>
-      <section className="flex flex-wrap justify-around">
+      <section className="flex flex-wrap justify-between">
         <div className="bg-accent-1 border-grey-4 rounded-lg my-5 p-3">
           <h3 className="text-lg font-bold mb-2">Farm Overview</h3>
           <div className="border border-zinc-100 my-3"></div>
@@ -213,6 +284,123 @@ export default function MainContent({ selectedItem }) {
             <button className="p-2 border border-gray-300 rounded-md bg-white">
               Harvesting Schedule
             </button>
+          </div>
+        </div>
+        <div className="flex gap-4 justify-between">
+          <Schedule
+            title="Planting Schedule"
+            subtitle="Upcoming Planting"
+            data={plantingScheduleData}
+          />
+          <Schedule
+            title="Harvesting Schedule"
+            subtitle="Upcoming Harvesting"
+            data={harvestingScheduleData}
+          />
+        </div>
+        <div>
+          <div className="bg-accent-1 border-grey-4 rounded-lg p-8 my-3">
+            <h2 className="text-[20px] mb-[24px] font-medium">
+              Recommendations
+            </h2>
+            <div className="flex flex-col gap-3">
+              {recommendations.map((item, i) => (
+                <div className="flex items-center gap-3" key={i}>
+                  <Image src={item.icon} alt="" width={15} height={15} />
+                  <p>{item.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div className="bg-accent-1 border-grey-4 rounded-lg p-8 my-3">
+            <h3 className="text-[20px] mb-[24px] font-medium">
+              Planting and Soil Tips
+            </h3>
+            <div className="flex flex-col gap-3">
+              <h3 className="text-grey-3 text-[18px] mb-[17px]">
+                Fall Planting
+              </h3>
+              <div className="flex items-center gap-3 ">
+                <div className="flex gap-3">
+                  <Image
+                    src="/dashboard_images/maize.svg"
+                    alt=""
+                    width={15}
+                    height={15}
+                  />
+                  <p>
+                    Enhance soil health with cover crops! More tips in our blog.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col gap-3 mt-8">
+              <h3 className="text-grey-3 text-[18px] mb-[17px]">
+                Spring Soil Enrichment
+              </h3>
+              <div className="flex items-center gap-3 ">
+                <div className="flex gap-3">
+                  <Image
+                    src="/dashboard_images/maize.svg"
+                    alt=""
+                    width={15}
+                    height={15}
+                  />
+                  <p>
+                    Use compost and manure for a thriving spring planting
+                    season.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div className="bg-accent-1 border-grey-4 rounded-lg p-8 my-3">
+            <h3 className="text-[20px] mb-[24px] font-medium">
+              Weather and Pest Alerts
+            </h3>
+            <div className="flex flex-col gap-3">
+              <h3 className="text-grey-3 text-[18px] mb-[17px]">
+                Frost Advisory
+              </h3>
+              <div className="flex items-center gap-3 ">
+                <div className="flex gap-3">
+                  <Image
+                    src="/dashboard_images/maize.svg"
+                    alt=""
+                    width={15}
+                    height={15}
+                  />
+                  <p>
+                    Protect crops on frosty nights. Check weather overview for
+                    alerts.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col gap-3 mt-8">
+              <h3 className="text-grey-3 text-[18px] mb-[17px]">
+                Aphid Prevention Alert
+              </h3>
+              <div className="flex items-center gap-3 ">
+                <div className="flex gap-3">
+                  <Image
+                    src="/dashboard_images/maize.svg"
+                    alt=""
+                    width={15}
+                    height={15}
+                  />
+                  <p>
+                    Keep aphids at bay with ladybugs and lacewings. Explore our
+                    guide.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

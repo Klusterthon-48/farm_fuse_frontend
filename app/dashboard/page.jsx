@@ -15,9 +15,11 @@ export default function Dashboard() {
   return (
     <div className="flex">
       <Sidebar />
-      <div className="flex-1 bg-white mx-[50px]">
+      <div className="flex-1 bg-white mx-[50px] overflow-scroll h-screen">
         <Navbar />
-        <MainContent />
+        <div className="">
+          <MainContent />
+        </div>
       </div>
     </div>
   );
