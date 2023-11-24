@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import React from "react";
-import logo from "../../public/navbar_images/logo.png";
+import logo from "../../public/navbar_images/logo.svg";
 import Link from "next/link";
 import Slider from "./homepage_components/Slider";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -19,7 +19,7 @@ export default function Navbar() {
       <Slider />
       <div className="flex w-[90%] max-w-[1200px] font-[500] text-black-3  justify-between bg-transparent items-center py-4 text-[16px] mx-auto">
         <Link href="/">
-          <Image src={logo} alt="logo" />
+          <Image src={logo} alt="logo" width={200} height={200} />
         </Link>
         <div className="hidden lg:flex ">
           <Link href="/" className="mx-2">
