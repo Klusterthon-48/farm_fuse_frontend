@@ -8,12 +8,13 @@ import overlay from "../../../public/auth_images/overlay.svg";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Signup() {
   const dispatch = useDispatch();
   const router = useRouter();
   const [name, setName] = useState("");
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -27,9 +28,20 @@ export default function Signup() {
       setIsLoading(true);
       setError(null);
 
+      if (!password) {
+        setIsLoading(false);
+        toast.error("Password is required");
+        return;
+      }
+      if (!confirmPassword) {
+        setIsLoading(false);
+        toast.error("Confirm Password is required");
+        return;
+      }
+
       if (password !== confirmPassword) {
         setIsLoading(false);
-        setError("Passwords do not match");
+        toast.error("Passwords do not match");
         return;
       }
       const response = await axios.post(
@@ -39,18 +51,31 @@ export default function Signup() {
 
       const json = response.data;
 
+      console.log(json);
+
+      if (response.status === 409) {
+        setIsLoading(false);
+        toast.error("Email already exists");
+        return;
+      }
+
       if (response.status === 200) {
         dispatch(setName(name));
         setIsLoading(false);
-        router.push("/login");
+        toast.success("Account created successfully");
       } else {
         setIsLoading(false);
         setError(json.error);
       }
+      router.push("/success");
     } catch (error) {
       setError(error.message);
+      // toast.error(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
+
   return (
     <main className="bg-accent-1  h-screen w-full">
       <section className="flex h-screen text-[16px]">
@@ -60,59 +85,60 @@ export default function Signup() {
           </Link>
           <h4 className="text-2xl text-black-3 py-[50px]">Sign Up</h4>
           <form>
-            <div className="flex flex-wrap justify-between">
-              <div className="w-full sm:w-5/12">
-                <p className="text-[#828282] pb-3 uppercase">Full Name</p>
+            <div className="flex flex-col gap-10 justify-between mt-5">
+              <div className="flex flex-wrap justify-between">
+                <div className="w-full">
+                  <p className="text-black-3 pb-3 uppercase">Full Name</p>
+                  <input
+                    type="text"
+                    placeholder="Enter your name"
+                    className="bg-transparent border-b border-primary w-full sm:w-[98%] text-black-3 outline-0"
+                    id="name"
+                    name="name"
+                    autoComplete="name"
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div>
+                <p className="text-[#828282] pb-3 uppercase">Email</p>
                 <input
                   type="text"
-                  placeholder="Enter your name"
-                  className="bg-transparent border-b w-full sm:w-[98%] text-[#E0E0E0] outline-0"
-                  id="name"
-                  name="name"
-                  autoComplete="name"
-                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Enter your email"
+                  className="bg-transparent border-b border-primary w-full text-black-3 outline-0"
+                  id="email"
+                  name="email"
+                  autoComplete="email"
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
-            </div>
-            <div className="mt-5">
-              <p className="text-[#828282] pb-3 uppercase">Email</p>
-              <input
-                type="text"
-                placeholder="Enter your email"
-                className="bg-transparent border-b w-full text-[#E0E0E0] outline-0"
-                id="email"
-                name="email"
-                autoComplete="email"
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-
-            <div className="flex flex-wrap justify-between mt-5">
-              <div className="w-full lg:w-[45%]  mb-[40px] lg:mb-0">
-                <p className="text-[#828282] pb-3 uppercase">Password</p>
-                <input
-                  type="password"
-                  placeholder="Enter your password"
-                  className="bg-transparent border-b w-full sm:w-[98%] text-[#E0E0E0] outline-0"
-                  id="password"
-                  name="password"
-                  autoComplete="password"
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-              <div className="w-full sm:w-5/12">
-                <p className="text-[#828282] pb-3 uppercase">
-                  Confirm Password
-                </p>
-                <input
-                  type="password"
-                  placeholder="Confirm your password"
-                  className="bg-transparent border-b w-full sm:w-[98%] text-[#E0E0E0] outline-0"
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  autoComplete="password"
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                />
+              <div className="grid lg:grid-cols-2 gap-10">
+                <div>
+                  <p className="text-[#828282] pb-3 uppercase">Password</p>
+                  <input
+                    type="password"
+                    placeholder="Enter your password"
+                    className="bg-transparent border-b border-primary w-full sm:w-[98%] text-black-3 outline-0"
+                    id="password"
+                    name="password"
+                    autoComplete="password"
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+                <div className="mt-2 lg:mt-0">
+                  <p className="text-[#828282] pb-3 uppercase">
+                    Confirm Password
+                  </p>
+                  <input
+                    type="password"
+                    placeholder="Confirm your password"
+                    className="bg-transparent border-b border-primary w-full sm:w-[98%] text-black-3 outline-0"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    autoComplete="password"
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                </div>
               </div>
             </div>
 
@@ -128,7 +154,7 @@ export default function Signup() {
                 className={
                   isLoading
                     ? " bg-green-200 rounded-md text-white p-2 px-10 font-bold mb-5"
-                    : "bg-primary }rounded-md text-white p-2 px-10 font-bold mb-5"
+                    : "bg-primary rounded-md text-white p-2 px-10 font-bold mb-5"
                 }
               >
                 {isLoading ? "Creating..." : "Create Account"}
@@ -165,6 +191,7 @@ export default function Signup() {
           </div>
         </div>
       </section>
+      <ToastContainer />
     </main>
   );
 }

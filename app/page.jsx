@@ -5,6 +5,7 @@ import WhyChooseUs from "./components/homepage_components/WhyChooseUs";
 import Prediction from "./components/homepage_components/Prediction";
 import Update from "./components/homepage_components/Update";
 import Footer from "./components/footer";
+import Started from "./components/homepage_components/Started";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <Features />
       <WhyChooseUs />
       <Prediction />
+      <Started />
       <Update />
       <Footer />
     </main>

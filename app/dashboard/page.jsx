@@ -6,12 +6,6 @@ import Navbar from "../components/dashboard_components/Navbar";
 import MainContent from "../components/dashboard_components/MainContent";
 
 export default function Dashboard() {
-  // const [selectedItem, setSelectedItem] = useState("home");
-
-  // const handleItemClick = (item) => {
-  //   setSelectedItem(item);
-  // };
-
   return (
     <div className="flex">
       <Sidebar />
