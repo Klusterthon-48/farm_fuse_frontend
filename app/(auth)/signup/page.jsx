@@ -1,25 +1,19 @@
-<<<<<<< HEAD
-=======
 "use client";
 
->>>>>>> 74dcb9b86e99ca7384a8c5bcbb50ca4bfac7ec1b
 import Link from "next/link";
 import React, { useState } from "react";
 import Image from "next/image";
 import logo from "../../../public/auth_images/logo.png";
-<<<<<<< HEAD
 import overlay from "../../../public/auth_images/overlay.svg";
-=======
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { useRouter } from "next/navigation";
->>>>>>> 74dcb9b86e99ca7384a8c5bcbb50ca4bfac7ec1b
 
 export default function Signup() {
   const dispatch = useDispatch();
   const router = useRouter();
   const [name, setName] = useState("");
-  
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -33,19 +27,16 @@ export default function Signup() {
       setIsLoading(true);
       setError(null);
 
-
-   
-    if (password !== confirmPassword) {
-      setIsLoading(false);
-      setError("Passwords do not match");
-      return;
-    }
+      if (password !== confirmPassword) {
+        setIsLoading(false);
+        setError("Passwords do not match");
+        return;
+      }
       const response = await axios.post(
         "https://farm-fuse-backend.vercel.app/api/register",
         { name, email, password }
       );
 
-     
       const json = response.data;
 
       if (response.status === 200) {
@@ -69,23 +60,6 @@ export default function Signup() {
           </Link>
           <h4 className="text-2xl text-black-3 py-[50px]">Sign Up</h4>
           <form>
-<<<<<<< HEAD
-            <div className="flex  flex-col lg:flex-row justify-between lg:mb-[50px]">
-              <div className="w-full lg:w-[45%] mb-[40px] lg:mb-0">
-                <p className="text-[#828282] pb-3 uppercase">First Name</p>
-                <input
-                  type="text"
-                  placeholder="Enter first name"
-                  className="bg-transparent border-b w-full sm:w-[98%] text-black-3 outline-0 border-primary"
-                />
-              </div>
-              <div className="w-full lg:w-[45%] mb-[40px] lg:mb-0">
-                <p className="text-[#828282] pb-3 uppercase">Last Name</p>
-                <input
-                  type="text"
-                  placeholder="Enter Last name"
-                  className="bg-transparent border-b w-full sm:w-[98%] text-black-3 outline-0 border-primary "
-=======
             <div className="flex flex-wrap justify-between">
               <div className="w-full sm:w-5/12">
                 <p className="text-[#828282] pb-3 uppercase">Full Name</p>
@@ -97,19 +71,9 @@ export default function Signup() {
                   name="name"
                   autoComplete="name"
                   onChange={(e) => setName(e.target.value)}
->>>>>>> 74dcb9b86e99ca7384a8c5bcbb50ca4bfac7ec1b
                 />
               </div>
-            
             </div>
-<<<<<<< HEAD
-            <div className="mt-5 mb-[50px]">
-              <p className="text-[#828282] pb-3 uppercase">Username/Email</p>
-              <input
-                type="text"
-                placeholder="Enter your mail/username"
-                className="bg-transparent border-b w-full text-black-3 outline-0 border-primary "
-=======
             <div className="mt-5">
               <p className="text-[#828282] pb-3 uppercase">Email</p>
               <input
@@ -120,7 +84,6 @@ export default function Signup() {
                 name="email"
                 autoComplete="email"
                 onChange={(e) => setEmail(e.target.value)}
->>>>>>> 74dcb9b86e99ca7384a8c5bcbb50ca4bfac7ec1b
               />
             </div>
 
@@ -130,12 +93,6 @@ export default function Signup() {
                 <input
                   type="password"
                   placeholder="Enter your password"
-<<<<<<< HEAD
-                  className="bg-transparent border-b w-full sm:w-[98%] text-black-3 outline-0 border-primary "
-                />
-              </div>
-              <div className=" w-full lg:w-[45%]  mb-[40px] lg:mb-0">
-=======
                   className="bg-transparent border-b w-full sm:w-[98%] text-[#E0E0E0] outline-0"
                   id="password"
                   name="password"
@@ -144,22 +101,17 @@ export default function Signup() {
                 />
               </div>
               <div className="w-full sm:w-5/12">
->>>>>>> 74dcb9b86e99ca7384a8c5bcbb50ca4bfac7ec1b
                 <p className="text-[#828282] pb-3 uppercase">
                   Confirm Password
                 </p>
                 <input
                   type="password"
                   placeholder="Confirm your password"
-<<<<<<< HEAD
-                  className="bg-transparent border-b w-full sm:w-[98%] text-[#E0E0E0] outline-0 border-primary"
-=======
                   className="bg-transparent border-b w-full sm:w-[98%] text-[#E0E0E0] outline-0"
                   id="confirmPassword"
                   name="confirmPassword"
                   autoComplete="password"
                   onChange={(e) => setConfirmPassword(e.target.value)}
->>>>>>> 74dcb9b86e99ca7384a8c5bcbb50ca4bfac7ec1b
                 />
               </div>
             </div>
@@ -171,14 +123,6 @@ export default function Signup() {
               </small>
             </div>
             <div className="flex flex-wrap justify-center mb-5 mt-3">
-<<<<<<< HEAD
-              <button className="bg-primary rounded-md text-white py-4 px-[10%] font-medium mb-5">
-                CREATE ACCOUNT
-              </button>
-            </div>
-          </form>
-          <p className="text-center text-sm text-grey-3">
-=======
               <button
                 onClick={handleRegister}
                 className={
@@ -197,14 +141,12 @@ export default function Signup() {
             </p>
           )}
           <p className="text-center text-sm text-gray3 mt-5">
->>>>>>> 74dcb9b86e99ca7384a8c5bcbb50ca4bfac7ec1b
             Already have an account?
             <Link href="/login" className="text-primary underline">
               Sign in
             </Link>
           </p>
         </div>
-<<<<<<< HEAD
         <div className=" h-screen w-1/2 hidden   text-white login-grad md:flex pt-[204px] relative">
           <Image
             src={overlay}
@@ -217,13 +159,6 @@ export default function Signup() {
             <p className="text-sm sm:text-base">WELCOME TO</p>
             <h3 className="text-4xl py-5 font-medium">Farmfuse</h3>
             <div className="border-b-white w-10 sm:w-20 border mb-5" />
-=======
-        <div className="bg-primary flex items-center text-white">
-          <div className="px-5 sm:px-20">
-            <p className="text-sm sm:text-base">WELCOME TO</p>
-            <h3 className="text-xl sm:text-3xl py-5">Farmfuse</h3>
-            <div className="border-b-white w-10 sm:w-20 border mb-5"></div>
->>>>>>> 74dcb9b86e99ca7384a8c5bcbb50ca4bfac7ec1b
             <small className="text-xs sm:text-sm">
               Create your account to access the dashboard
             </small>

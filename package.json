@@ -15,12 +15,8 @@
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^4.12.0",
-<<<<<<< HEAD
-    "react-tooltip": "^5.24.0"
-=======
     "react-redux": "^8.1.3",
     "redux": "^4.2.1"
->>>>>>> 74dcb9b86e99ca7384a8c5bcbb50ca4bfac7ec1b
   },
   "devDependencies": {
     "@types/node": "20.9.3",
