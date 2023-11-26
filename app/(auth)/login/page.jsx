@@ -1,10 +1,52 @@
+"use client";
+
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import logo from "../../../public/auth_images/logo.png";
 import overlay from "../../../public/auth_images/overlay.svg";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      const response = await axios.post(
+        "https://farm-fuse-backend.vercel.app/api/login",
+        {
+          email,
+          password,
+        }
+      );
+
+      const json = response.data;
+
+      if (response.status === 200) {
+        // localStorage.setItem('user', JSON.stringify(json))
+        router.push("/");
+      } else {
+        setIsLoading(false);
+        setError(json.error);
+      }
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
   return (
     <main className="bg-accent-1 h-screen w-full">
       <section className="flex h-screen text-[16px]">
@@ -16,16 +58,24 @@ export default function Login() {
           <form>
             <p className=" text-[#828282] pb-4 text-[16px]">EMAIL/USERNAME</p>
             <input
-              type="text"
-              placeholder="Enter your email/username"
-              className="bg-transparent border-b border-primary w-[100%] text-black-3 outline-0 mb-[50px]"
+              type="email"
+              placeholder="Enter your mail/username"
+              className="bg-transparent border-b w-[100%] text-[#E0E0E0] outline-0"
+              id="email"
+              name="email"
+              autoComplete="email"
+              onChange={(e) => setEmail(e.target.value)}
             />
             <div className="mt-5">
               <p className=" text-[#828282] text-[16px] pb-4">PASSWORD</p>
               <input
                 type="password"
                 placeholder="Enter your password"
-                className="bg-transparent border-b border-primary w-[100%] text-black-3 outline-0"
+                className="bg-transparent border-b w-[100%] text-[#E0E0E0] outline-0"
+                id="password"
+                name="password"
+                autoComplete="current-password"
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
 
@@ -33,9 +83,16 @@ export default function Login() {
               <input type="checkbox" />
               <small className="ms-2 text-grey-3">Remember Me</small>
             </div>
-            <div className="flex flex-wrap justify-between mb-12 items-center gap-6">
-              <button className="bg-primary rounded-md text-white p-2 px-10 font-bold">
-                Login
+            <div className="flex flex-wrap justify-between">
+              <button
+                onClick={handleLogin}
+                className={
+                  isLoading
+                    ? " bg-green-200 rounded-md text-white p-2 px-10 font-bold mb-5"
+                    : "bg-primary }rounded-md text-white p-2 px-10 font-bold mb-5"
+                }
+              >
+                {isLoading ? "Waiting..." : " Log in"}
               </button>
               <Link href="/signup">
                 <button className="border border-secondary p-2 px-4 text-primary rounded-md">
@@ -44,8 +101,13 @@ export default function Login() {
               </Link>
             </div>
           </form>
-          <p className="text-center text-sm text-grey-3">
-            Forget your password?{" "}
+          {error && (
+            <p className="text-red-500 text-sm font-bold text-center mt-2">
+              {error}
+            </p>
+          )}
+          <p className="text-center text-sm text-gray3  mt-6">
+            Forget your password?
             <a href="#" className="text-primary underline">
               Get help signing in
             </a>

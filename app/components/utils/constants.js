@@ -63,3 +63,70 @@ export const FooterData = [
     ],
   },
 ];
+export const plantingScheduleData = [
+  {
+    icon: "/dashboard_images/maize.svg",
+    crop: "lentil",
+    text: "Planting soon! Prepare for [Upcoming Date]",
+  },
+  {
+    icon: "/dashboard_images/maize.svg",
+    crop: "chickpea",
+    text: "Get ready for planting on [Upcoming Date]",
+  },
+  {
+    icon: "/dashboard_images/maize.svg",
+    crop: "maize",
+    text: "Upcoming planting session on [Upcoming Date]",
+  },
+];
+export const harvestingScheduleData = [
+  {
+    icon: "/dashboard_images/maize.svg",
+    crop: "lentil",
+    text: "Planting soon! Prepare for [Upcoming Date]",
+  },
+  {
+    icon: "/dashboard_images/maize.svg",
+    crop: "chickpea",
+    text: "Get ready for planting on [Upcoming Date]",
+  },
+  {
+    icon: "/dashboard_images/maize.svg",
+    crop: "maize",
+    text: "Upcoming planting session on [Upcoming Date]",
+  },
+];
+
+export const recommendations = [
+  {
+    icon: "/dashboard_images/maize.svg",
+    text: "Consider irrigating before planting",
+  },
+  {
+    icon: "/dashboard_images/maize.svg",
+    text: "Consider irrigating before planting",
+  },
+  {
+    icon: "/dashboard_images/maize.svg",
+    text: "Consider irrigating before planting",
+  },
+];
+
+export const tipsData = [
+  {
+    icon: "/dashboard_images/maize.svg",
+    subtitle: "lentil",
+    text: "Planting soon! Prepare for [Upcoming Date]",
+  },
+  {
+    icon: "/dashboard_images/maize.svg",
+    subtitle: "chickpea",
+    text: "Get ready for planting on [Upcoming Date]",
+  },
+  {
+    icon: "/dashboard_images/maize.svg",
+    subtitle: "maize",
+    text: "Upcoming planting session on [Upcoming Date]",
+  },
+];

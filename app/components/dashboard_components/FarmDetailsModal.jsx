@@ -13,16 +13,9 @@ const FarmDetailsModal = ({ isOpen, onClose }) => {
         onClick={onClose}
       ></div>
 
-      <div className="bg-grey-1 p-12 pr-[180px] w-[50%] rounded-2xl shadow-md z-10 text-white">
+      <div className="bg-grey-1 p-12 w-[50%] rounded-2xl shadow-md z-10 text-white">
         <h2 className="font-medium text-4xl mb-7">Edit Farm Details</h2>
-        <div>
-          <label className="text-grey-3">ENTER FARM NAME</label>
-          <input
-            type="text"
-            placeholder="Andrew's Farm"
-            className="w-full p-2 border rounded-lg bg-grey-1 border-grey-3 mt-4 mb-10 h-[56px]"
-          />
-        </div>
+
         <div className="flex flex-col bg-grey-1">
           <label className="text-grey-3">SELECT YOUR FARM LOCATION</label>
           <select className="flex flex-col bg-grey-1 h-[56px] border border-grey-3 rounded-lg mt-4 mb-10 py-4 px-1">
