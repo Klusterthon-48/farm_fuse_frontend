@@ -1,12 +1,13 @@
-"use client";
+'use client'
 
-import Link from "next/link";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import Image from "next/image";
 import logo from "../../../public/auth_images/logo.png";
-import { useDispatch } from "react-redux";
+import { login } from "../../redux/slices/authSlice";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -35,14 +36,15 @@ export default function Login() {
       const json = response.data;
 
       if (response.status === 200) {
-        // localStorage.setItem('user', JSON.stringify(json))
+        dispatch(login({ email, token: json.token }));
         router.push("/");
       } else {
         setIsLoading(false);
-        setError(json.error);
+        setError(json.error?.message || "An error occurred");
       }
     } catch (error) {
-      setError(error.message);
+      setIsLoading(false);
+      setError("Network error. Please try again.");
     }
   };
 
@@ -52,19 +54,20 @@ export default function Login() {
         <div>
           <Image src={logo} alt="logo" width={50} height={50} />
           <h4 className="text-2xl text-black-3 py-5">Log In</h4>
-          <form>
-            <p className=" text-[#828282] pb-3">Email/Username</p>
+          <form onSubmit={handleLogin}>
+            <p className="text-[#828282] pb-3">Email</p>
             <input
               type="email"
-              placeholder="Enter your mail/username"
+              placeholder="Enter your email"
               className="bg-transparent border-b w-[100%] text-[#E0E0E0] outline-0"
               id="email"
               name="email"
               autoComplete="email"
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
             <div className="mt-5">
-              <p className=" text-[#828282] pb-3">Password</p>
+              <p className="text-[#828282] pb-3">Password</p>
               <input
                 type="password"
                 placeholder="Enter your password"
@@ -73,6 +76,7 @@ export default function Login() {
                 name="password"
                 autoComplete="current-password"
                 onChange={(e) => setPassword(e.target.value)}
+                required
               />
             </div>
 
@@ -82,12 +86,13 @@ export default function Login() {
             </div>
             <div className="flex flex-wrap justify-between">
               <button
-                onClick={handleLogin}
-                className={
+                type="submit"
+                className={`${
                   isLoading
-                    ? " bg-green-200 rounded-md text-white p-2 px-10 font-bold mb-5"
-                    : "bg-primary }rounded-md text-white p-2 px-10 font-bold mb-5"
-                }
+                    ? "bg-green-200 rounded-md text-white p-2 px-10 font-bold mb-5 cursor-not-allowed"
+                    : "bg-primary rounded-md text-white p-2 px-10 font-bold mb-5"
+                }`}
+                disabled={isLoading}
               >
                 {isLoading ? "Waiting..." : " Log in"}
               </button>

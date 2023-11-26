@@ -1,4 +1,4 @@
-// MainContent.js
+
 
 import React from "react";
 import {
@@ -17,11 +17,47 @@ import {
   FaPlantWilt,
   FaRegLightbulb,
 } from "react-icons/fa6";
+const token = useSelector((state) => state.auth.token)
 
 export default function MainContent({ selectedItem }) {
   const soilMoisturePercentage = 30;
   const phPercentage = 70;
   const nutrientPercentage = 50;
+
+const token = useSelector((state) => state.auth.token)
+  const handlePredict = async (e) => {
+    e.preventDefault();
+  
+    try {
+      setIsLoading(true);
+      setError(null);
+  
+      const response = await axios.post(
+        "https://farm-fuse-backend.vercel.app/api/predict",
+        {
+          label,
+          location,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+  
+      const data = response.json();
+  
+      // Handle the response as needed, for example:
+      console.log("Prediction result:", data);
+  
+    } catch (error) {
+      setError(error.message || "An error occurred");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+
 
   return (
     <div className="main-content text-black-3">
