@@ -13,6 +13,31 @@ export default function Dashboard () {
     setSelectedItem(item);
   };
 
+  const handlePredict = async (e) => {
+    e.preventDefault();
+
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      const response = await axios.get(
+        "https://farm-fuse-backend.vercel.app/api/predict",
+       
+      );
+
+      const json = response.data;
+
+      if (response.status === 200) {
+        router.push("/");
+      } else {
+        setIsLoading(false);
+        setError(json.error);
+      }
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
   return (
     <div className="flex">
       <Sidebar selectedItem={selectedItem} onItemClick={handleItemClick} />

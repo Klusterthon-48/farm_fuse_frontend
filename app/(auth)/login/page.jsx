@@ -12,7 +12,7 @@ export default function Login() {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -27,7 +27,7 @@ export default function Login() {
       const response = await axios.post(
         "https://farm-fuse-backend.vercel.app/api/login",
         {
-          username,
+          email,
           password,
         }
       );
@@ -35,7 +35,7 @@ export default function Login() {
       const json = response.data;
 
       if (response.status === 200) {
-        dispatch(setUsername(username));
+        // localStorage.setItem('user', JSON.stringify(json))
         router.push("/");
       } else {
         setIsLoading(false);
@@ -55,13 +55,13 @@ export default function Login() {
           <form>
             <p className=" text-[#828282] pb-3">Email/Username</p>
             <input
-              type="text"
+              type="email"
               placeholder="Enter your mail/username"
               className="bg-transparent border-b w-[100%] text-[#E0E0E0] outline-0"
-              id="username"
-              name="username"
-              autoComplete="username"
-              onChange={(e) => setUsername(e.target.value)}
+              id="email"
+              name="email"
+              autoComplete="email"
+              onChange={(e) => setEmail(e.target.value)}
             />
             <div className="mt-5">
               <p className=" text-[#828282] pb-3">Password</p>
@@ -81,8 +81,15 @@ export default function Login() {
               <small className="ms-2 text-gray3">Remember Me</small>
             </div>
             <div className="flex flex-wrap justify-between">
-              <button onClick={handleLogin} className="bg-primary rounded-md text-white p-2 px-10 font-bold mb-5">
-                {isLoading ? "Logging in..." : " Log in"}
+              <button
+                onClick={handleLogin}
+                className={
+                  isLoading
+                    ? " bg-green-200 rounded-md text-white p-2 px-10 font-bold mb-5"
+                    : "bg-primary }rounded-md text-white p-2 px-10 font-bold mb-5"
+                }
+              >
+                {isLoading ? "Waiting..." : " Log in"}
               </button>
               <Link href="/signup">
                 <button className="border border-secondary p-2 px-4 text-primary rounded-md ">
@@ -91,10 +98,14 @@ export default function Login() {
               </Link>
             </div>
           </form>
-          {error && <p className="text-red-500 text-sm font-bold text-center mt-2">{error}</p>}
+          {error && (
+            <p className="text-red-500 text-sm font-bold text-center mt-2">
+              {error}
+            </p>
+          )}
           <p className="text-center text-sm text-gray3  mt-6">
-            Forget your password? 
-            <a href="#" className="text-primary underline"> 
+            Forget your password?
+            <a href="#" className="text-primary underline">
               Get help signing in
             </a>
           </p>
@@ -106,7 +117,7 @@ export default function Login() {
             <div className="border-b-white w-20 border mb-5"></div>
             <small>Login to access Dashboard</small>
           </div>
-          <Link href='/dashboard'>dashboard</Link>
+          <Link href="/dashboard">dashboard</Link>
         </div>
       </section>
     </main>

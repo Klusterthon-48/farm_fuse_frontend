@@ -12,7 +12,7 @@ export default function Signup() {
   const dispatch = useDispatch();
   const router = useRouter();
   const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -35,7 +35,7 @@ export default function Signup() {
     }
       const response = await axios.post(
         "https://farm-fuse-backend.vercel.app/api/register",
-        { name, username, email, password }
+        { name, email, password }
       );
 
      
@@ -53,10 +53,6 @@ export default function Signup() {
       setError(error.message);
     }
   };
-console.log(name);
-console.log(email);
-console.log(password);
-console.log(error);
   return (
     <main className="bg-accent-1 p-5 sm:p-10 py-24">
       <section className="grid sm:grid-cols-2 gap-8 sm:text-sm md:text-base lg:text-base">
@@ -66,7 +62,7 @@ console.log(error);
           <form>
             <div className="flex flex-wrap justify-between">
               <div className="w-full sm:w-5/12">
-                <p className="text-[#828282] pb-3 uppercase">Name</p>
+                <p className="text-[#828282] pb-3 uppercase">Full Name</p>
                 <input
                   type="text"
                   placeholder="Enter your name"
@@ -77,18 +73,7 @@ console.log(error);
                   onChange={(e) => setName(e.target.value)}
                 />
               </div>
-              <div className="w-full sm:w-5/12">
-                <p className="text-[#828282] pb-3 uppercase">Username</p>
-                <input
-                  type="text"
-                  placeholder="Enter your username"
-                  className="bg-transparent border-b w-full sm:w-[98%] text-[#E0E0E0] outline-0"
-                  id="username"
-                  name="username"
-                  autoComplete="username"
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-              </div>
+            
             </div>
             <div className="mt-5">
               <p className="text-[#828282] pb-3 uppercase">Email</p>
@@ -141,7 +126,11 @@ console.log(error);
             <div className="flex flex-wrap justify-center mb-5 mt-3">
               <button
                 onClick={handleRegister}
-                className="bg-primary rounded-md text-white p-2 px-8 font-bold"
+                className={
+                  isLoading
+                    ? " bg-green-200 rounded-md text-white p-2 px-10 font-bold mb-5"
+                    : "bg-primary }rounded-md text-white p-2 px-10 font-bold mb-5"
+                }
               >
                 {isLoading ? "Creating..." : "Create Account"}
               </button>

@@ -7,9 +7,19 @@ import Link from "next/link";
 import Slider from "./homepage_components/Slider";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoCloseSharp } from "react-icons/io5";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const [showMenu, setShowMenu] = React.useState(false);
+  const router = useRouter();
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+
+    // localStorage.removeItem("username");
+    console.log("user logged out");
+    router.push("/login");
+  };
 
   const handleShow = () => {
     setShowMenu(!showMenu);
@@ -37,6 +47,9 @@ export default function Navbar() {
           <Link href="/" className="mx-2">
             About us
           </Link>
+          <button onClick={handleLogout} className="mx-2">
+            Logout
+          </button>
         </div>
         {/* Mobile Menu */}
         {/* {showMenu && ( */}
@@ -63,7 +76,7 @@ export default function Navbar() {
           <Link onClick={handleShow} href="/" className="mx-2">
             About us
           </Link>
-          <Link href='/login' onClick={handleShow}  className="mx-2 md:hidden">
+          <Link href="/login" onClick={handleShow} className="mx-2 md:hidden">
             Log In
           </Link>
           <Link
