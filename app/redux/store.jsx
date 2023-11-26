@@ -1,12 +1,12 @@
 "use client";
 
 import { configureStore } from "@reduxjs/toolkit";
-import userReducer from "./slices/userSlice";
+import authReducer from "./slices/authSlice";
 import predictionReducer from "./slices/prediction";
 
 const store = configureStore({
   reducer: {
-    user: userReducer,
+    auth: authReducer,
     prediction: predictionReducer,
   },
 });

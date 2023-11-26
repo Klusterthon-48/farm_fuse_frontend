@@ -1,18 +1,20 @@
 "use client";
 
-import Link from "next/link";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import Image from "next/image";
 import logo from "../../../public/auth_images/logo.png";
 import overlay from "../../../public/auth_images/overlay.svg";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { login } from "../../redux/slices/authSlice";
 
 export default function Login() {
   const router = useRouter();
-
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -38,18 +40,18 @@ export default function Login() {
       if (response.status === 200) {
         toast.success("Login successful");
         // localStorage.setItem('user', JSON.stringify(json))
+        dispatch(login({ email, token: json.token }));
         router.push("/dashboard");
+      } else {
+        setIsLoading(false);
+        setError(json.error?.message || "An error occurred");
       }
-      // else {
-      //   setIsLoading(false);
-      //   toast.error(json.error);
-      //   // setError(json.error);
-      // }
     } catch (error) {
       // setError(error.message);
       toast.error("invalid email or password");
     } finally {
       setIsLoading(false);
+      setError("Network error. Please try again.");
     }
   };
 
@@ -63,7 +65,7 @@ export default function Login() {
               <Image src={logo} alt="logo" width={50} height={50} />
             </Link>
             <h4 className="text-2xl text-black-3 py-[50px]">Log In</h4>
-            <form>
+            <form onSubmit={handleLogin}>
               <div>
                 <p className=" text-[#828282] pb-4 text-[16px]">EMAIL</p>
                 <input
@@ -86,6 +88,7 @@ export default function Login() {
                   name="password"
                   autoComplete="current-password"
                   onChange={(e) => setPassword(e.target.value)}
+                  required
                 />
               </div>
 
@@ -95,12 +98,13 @@ export default function Login() {
               </div>
               <div className="flex flex-wrap justify-between">
                 <button
-                  onClick={handleLogin}
-                  className={
+                  type="submit"
+                  className={`${
                     isLoading
-                      ? " bg-green-200 rounded-md text-white p-2 px-10 font-bold mb-5"
-                      : "bg-primary }rounded-md text-white p-2 px-10 font-bold mb-5"
-                  }
+                      ? "bg-green-200 rounded-md text-white p-2 px-10 font-bold mb-5 cursor-not-allowed"
+                      : "bg-primary rounded-md text-white p-2 px-10 font-bold mb-5"
+                  }`}
+                  disabled={isLoading}
                 >
                   {isLoading ? "Waiting..." : " Log in"}
                 </button>

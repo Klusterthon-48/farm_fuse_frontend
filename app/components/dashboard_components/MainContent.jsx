@@ -1,31 +1,27 @@
-// MainContent.js
-
 "use client";
 
 import Image from "next/image";
-import React, { useState } from "react";
-import { FaLeaf, FaBolt, FaApple, FaNutritionix } from "react-icons/fa";
+import { useState } from "react";
+import { FaApple, FaBolt, FaLeaf, FaNutritionix } from "react-icons/fa";
 import {
   FaBoltLightning,
   FaBowlFood,
   FaCloudBolt,
-  FaCloudMoonRain,
   FaGlassWaterDroplet,
   FaPlantWilt,
-  FaRegLightbulb,
 } from "react-icons/fa6";
-import Schedule from "../utils/Schedule";
-import Info from "../utils/Info";
-import FarmDetailsModal from "../dashboard_components/FarmDetailsModal";
 import { FiEdit3 } from "react-icons/fi";
-// import { SunnyCloud } from "../../../public/dashboard_images/sunny-cloud.svg";
+import FarmDetailsModal from "../dashboard_components/FarmDetailsModal";
+import Schedule from "../utils/Schedule";
+
+import { useSelector } from "react-redux";
 import {
   harvestingScheduleData,
   plantingScheduleData,
   recommendations,
 } from "../utils/constants";
 
-export default function MainContent({ selectedItem }) {
+export default function MainContent() {
   const soilMoisturePercentage = 30;
   const phPercentage = 70;
   const nutrientPercentage = 50;
@@ -38,6 +34,37 @@ export default function MainContent({ selectedItem }) {
 
   const handleClosePopup = () => {
     setIsPopupOpen(false);
+  };
+  const token = useSelector((state) => state.auth.token);
+  const handlePredict = async (e) => {
+    e.preventDefault();
+
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      const response = await axios.post(
+        "https://farm-fuse-backend.vercel.app/api/predict",
+        {
+          label,
+          location,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const data = response.json();
+
+      // Handle the response as needed, for example:
+      console.log("Prediction result:", data);
+    } catch (error) {
+      setError(error.message || "An error occurred");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
