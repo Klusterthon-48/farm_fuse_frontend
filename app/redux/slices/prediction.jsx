@@ -1,22 +1,22 @@
 "use client";
 
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 export const predictionSlice = createSlice({
-  name: 'prediction',
+  name: "prediction",
   initialState: {
-    ph: '',
-    temperature: '',
-    soilMoisture: '',
-    nutrients: '',
-    plantingTime: '',
-    harvestTime: '',
+    ph: "",
+    temperature: "",
+    soilMoisture: "",
+    nutrients: "",
+    plantingTime: "",
+    harvestTime: "",
   },
   reducers: {
     setPh: (state, action) => {
       state.ph = action.payload;
     },
-   
+
     setNutrient: (state, action) => {
       state.nutrients = action.payload;
     },
@@ -27,7 +27,7 @@ export const predictionSlice = createSlice({
       state.soilMoisture = action.payload;
     },
     setPlantingTime: (state, action) => {
-      state.plantingTime= action.payload;
+      state.plantingTime = action.payload;
     },
     setHarvestTime: (state, action) => {
       state.harvestTime = action.payload;
@@ -35,7 +35,13 @@ export const predictionSlice = createSlice({
   },
 });
 
-export const { setPh, setTemperature, setSoilMoisture, setNutrient,setHarvestTime, setPlantingTime } = predictionSlice.actions;
-
+export const {
+  setPh,
+  setTemperature,
+  setSoilMoisture,
+  setNutrient,
+  setHarvestTime,
+  setPlantingTime,
+} = predictionSlice.actions;
 
 export default predictionSlice.reducer;
