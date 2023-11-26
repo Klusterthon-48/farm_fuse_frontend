@@ -20,8 +20,12 @@ export default function Dashboard () {
       setIsLoading(true);
       setError(null);
 
-      const response = await axios.get(
+      const response = await axios.post(
         "https://farm-fuse-backend.vercel.app/api/predict",
+        {
+          label,
+          location
+        }
        
       );
 

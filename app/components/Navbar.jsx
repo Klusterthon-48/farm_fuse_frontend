@@ -17,8 +17,9 @@ export default function Navbar() {
     e.preventDefault();
 
     // localStorage.removeItem("username");
-    console.log("user logged out");
     router.push("/login");
+    console.log("user logged out");
+  
   };
 
   const handleShow = () => {
