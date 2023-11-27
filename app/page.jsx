@@ -7,7 +7,7 @@ import Update from "./components/homepage_components/Update";
 import Footer from "./components/footer";
 import Started from "./components/homepage_components/Started";
 
-export default function Home() {
+export default function Home() { 
   return (
     <main className="bg-accent-1 overflow-hidden w-screen">
       <Navbar />

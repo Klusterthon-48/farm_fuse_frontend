@@ -1,28 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
-import logo from "../../public/navbar_images/logo.svg";
 import Link from "next/link";
-import Slider from "./homepage_components/Slider";
+import React from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoCloseSharp } from "react-icons/io5";
-import { useRouter } from "next/navigation";
-import { logout } from "../redux/slices/authSlice";
-import { useDispatch } from "react-redux";
+import logo from "../../public/navbar_images/logo.svg";
+import Slider from "./homepage_components/Slider";
 
 export default function Navbar() {
-  const dispatch = useDispatch();
   const [showMenu, setShowMenu] = React.useState(false);
-  const router = useRouter();
-
-  const handleLogout = (e) => {
-    e.preventDefault();
-
-    dispatch(logout());
-    router.push("/login");
-    console.log("User logged out");
-  };
 
   const handleShow = () => {
     setShowMenu(!showMenu);
@@ -50,12 +37,6 @@ export default function Navbar() {
           <Link href="/" className="mx-2">
             About us
           </Link>
-          <Link href="/dashboard" className="mx-2">
-            Dashboard
-          </Link>
-          <button onClick={handleLogout} className="mx-2">
-            Logout
-          </button>
         </div>
         {/* Mobile Menu */}
         {/* {showMenu && ( */}

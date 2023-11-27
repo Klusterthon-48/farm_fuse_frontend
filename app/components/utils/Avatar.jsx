@@ -3,11 +3,9 @@ import React from "react";
 
 const Avatar = ({ imageUrl, title }) => {
   const getInitials = (name) => {
-    const names = name.split(" ");
-    return names
-      .map((word) => word[0])
-      .join("")
-      .toUpperCase();
+    const names = name?.split(" ");
+    return names?.map((word) => `${word[0]} ${word[1]}`.toUpperCase());
+    // .join("")
   };
 
   const renderAvatar = () => {
@@ -25,7 +23,9 @@ const Avatar = ({ imageUrl, title }) => {
       const initials = getInitials(title);
       return (
         <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-300">
-          <span className="text-sm font-medium text-gray-600">{initials}</span>
+          <span className="text-sm font-semibold text-gray-600">
+            {initials}
+          </span>
         </div>
       );
     }

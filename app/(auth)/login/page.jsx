@@ -1,16 +1,16 @@
 "use client";
 
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "../../../public/auth_images/logo.png";
+import { login } from "../../redux/slices/authSlice";
 import overlay from "../../../public/auth_images/overlay.svg";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { login } from "../../redux/slices/authSlice";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const router = useRouter();
@@ -19,6 +19,9 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const fullname = useSelector((state) => state.auth.name);
+  const useremail = useSelector((state) => state.auth.email);
+  const token = useSelector((state) => state.auth.token);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -36,25 +39,43 @@ export default function Login() {
       );
 
       const json = response.data;
+      // console.log("Response status:", response.status);
+      // console.log("Response data:", json);
 
-      if (response.status === 200) {
+      if (response.status === 200 && json.success) {
+        localStorage.setItem(
+          "userData",
+          JSON.stringify({
+            name: json.payload.farmer.name,
+            email: json.payload.farmer.email,
+            token: json.payload.token,
+          })
+        );
+        dispatch(
+          login({
+            name: json.payload.farmer.name,
+            email: json.payload.farmer.email,
+            token: json.payload.token,
+          })
+        );
+        // console.log(email);
         toast.success("Login successful");
-        // localStorage.setItem('user', JSON.stringify(json))
-        dispatch(login({ email, token: json.token }));
         router.push("/dashboard");
       } else {
         setIsLoading(false);
-        setError(json.error?.message || "An error occurred");
+        toast.error(json.message || "An error occurred");
       }
     } catch (error) {
-      // setError(error.message);
-      toast.error("invalid email or password");
+      setIsLoading(false);
+      toast.error("Invalid email or password");
     } finally {
       setIsLoading(false);
-      setError("Network error. Please try again.");
     }
   };
 
+  console.log(
+    `fullname is: ${fullname}, useremail is: ${useremail}, token is: ${token}.`
+  );
   return (
     <>
       <ToastContainer />

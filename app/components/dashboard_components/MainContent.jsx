@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaApple, FaBolt, FaLeaf, FaNutritionix } from "react-icons/fa";
 import {
   FaBoltLightning,
@@ -10,22 +10,47 @@ import {
   FaGlassWaterDroplet,
   FaPlantWilt,
 } from "react-icons/fa6";
+import { WiHumidity } from "react-icons/wi";
+
 import { FiEdit3 } from "react-icons/fi";
+import { useSelector } from "react-redux";
 import FarmDetailsModal from "../dashboard_components/FarmDetailsModal";
 import Schedule from "../utils/Schedule";
-
-import { useSelector } from "react-redux";
 import {
   harvestingScheduleData,
   plantingScheduleData,
   recommendations,
 } from "../utils/constants";
+import { formatDateToCustomString, kelvinToCelsius } from "../utils/helpers";
+import axios from "axios";
 
 export default function MainContent() {
   const soilMoisturePercentage = 30;
   const phPercentage = 70;
   const nutrientPercentage = 50;
+  // const [weatherData, setWeatherData] = useState(null);
+  const [weatherData, setWeatherData] = useState(null);
+  const [weatherLoading, setWeatherLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [formData, setFormData] = useState(null);
 
+  // Function to update form data
+  const updateFormData = (data) => {
+    setFormData(data);
+  };
+
+  const token = useSelector((state) => state.prediction.token);
+  const ph = useSelector((state) => state.prediction.ph);
+  const temperature = useSelector((state) => state.prediction.temperature);
+  const soilMoisture = useSelector((state) => state.prediction.soilMoisture);
+  const nutrients = useSelector((state) => state.prediction.nutrients);
+  const plantingTime = useSelector((state) => state.prediction.plantingTime);
+  const harvestTime = useSelector((state) => state.prediction.harvestTime);
+  const country = useSelector((state) => state.prediction.country);
+  const label = useSelector((state) => state.prediction.label);
+  const farmDetails = useSelector((state) => state.prediction.farmDetails);
+
+  console.log(farmDetails, "farmDetails");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const handleFarmDetails = () => {
@@ -35,45 +60,73 @@ export default function MainContent() {
   const handleClosePopup = () => {
     setIsPopupOpen(false);
   };
-  const token = useSelector((state) => state.auth.token);
-  const handlePredict = async (e) => {
-    e.preventDefault();
 
-    try {
-      setIsLoading(true);
-      setError(null);
+  console.log(weatherData?.main.temp, "weatherData");
 
-      const response = await axios.post(
-        "https://farm-fuse-backend.vercel.app/api/predict",
-        {
-          label,
-          location,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+  useEffect(() => {
+    const handleWeatherData = async () => {
+      try {
+        const response = await axios.get(
+          "https://api.openweathermap.org/data/2.5/weather?q=Nigeria&APPID=82252ce902b395ad117325e81348b09e"
+        );
+
+        const data = response.data;
+
+        if (response.status === 200) {
+          setWeatherData(data);
+        } else {
+          setError(data.error);
         }
-      );
+      } catch (error) {
+        setError(error.message);
+        // toast.error(error.message);
+      } finally {
+        // setIsLoading(false);
+      }
+    };
+    handleWeatherData();
+  }, []);
 
-      const data = response.json();
+  console.log(
+    "temperature: ",
+    temperature,
+    "ph: ",
+    ph,
+    "Moisture Content: ",
+    soilMoisture,
+    "Humidity: ",
+    nutrients,
+    "plantingTime: ",
+    plantingTime,
+    "harvestTime: ",
+    harvestTime,
+    "country: ",
+    country,
+    "label: ",
+    label,
+    token
+  );
 
-      // Handle the response as needed, for example:
-      console.log("Prediction result:", data);
-    } catch (error) {
-      setError(error.message || "An error occurred");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  console.log(formData, "formData");
+  console.log(formData?.country, "formData");
+
+  // console.log(
+  //   temperature,
+  //   ph,
+  //   soilMoisture,
+  //   nutrients,
+  //   plantingTime,
+  //   harvestTime
+  // );
 
   return (
     <div className="main-content text-black-3">
       <div className="  flex  justify-center  my-4">
         <p className="w-64 bg-accent-1 border-grey-4 text-center p-2 rounded-full">
-          Sunday 12th November, 2023
+          {formatDateToCustomString(new Date())}
         </p>
       </div>
+
       <button
         className="flex gap-3 items-center bg-primary rounded-full text-white py-3 px-5"
         onClick={handleFarmDetails}
@@ -82,7 +135,11 @@ export default function MainContent() {
         <FiEdit3 />
       </button>
 
-      <FarmDetailsModal isOpen={isPopupOpen} onClose={handleClosePopup} />
+      <FarmDetailsModal
+        isOpen={isPopupOpen}
+        onClose={handleClosePopup}
+        updateFormData={updateFormData}
+      />
       <section>
         <section className="grid md:grid-cols-3 gap-6 ">
           <div className="bg-accent-1 border-grey-4 rounded-lg my-5 p-3">
@@ -100,81 +157,75 @@ export default function MainContent() {
                 className="-mx-4"
               />
               <div className="ms-7">
-                <h1 className="text-3xl text-primary font-bold ">32°C</h1>
-                <p>Sunny Cloudy</p>
-                <p>New York, USA</p>
+                <h1 className="text-3xl text-primary font-bold ">
+                  {parseFloat(temperature)?.toFixed()}°C
+                </h1>
+                <p>{weatherData?.weather[0].description}</p>
+                <p>{weatherData?.country}</p>
               </div>
             </div>
 
-            <p className="my-2 font-bold">Crops:</p>
+            <p className="my-2 font-bold">Crop:</p>
             <div className="flex justify-between">
-              <div className="flex flex-col items-center">
-                <p>Tomato</p>
+              <p className="text-xl font-semibold">{formData?.label}</p>
+              {/* <div className="flex flex-col items-center">
+                <p>{label}</p>
                 <FaPlantWilt className="text-green-500 text-xl" />
               </div>
 
               <div className="flex flex-col items-center">
-                <p>Carrot</p>
+                <p>{country}</p>
                 <FaNutritionix className="text-orange-500 text-xl" />
               </div>
 
               <div className="flex flex-col items-center">
                 <p>Apple</p>
                 <FaApple className="text-red-500 text-xl" />
-              </div>
+              </div> */}
             </div>
           </div>
+
+          {/* ph => 14
+          humidity => 100
+          temperature => 100 */}
 
           <div className="bg-accent-1 border-grey-4 rounded-lg my-5 p-5">
             <h3 className="text-lg font-bold mb-2">Weather Updates</h3>
             <div className="border border-zinc-100 my-3"></div>
             <div className="flex items-center my-11">
               <Image
-                src="/dashboard_images/thunder.svg"
+                src="/dashboard_images/sunny-cloud.svg"
                 alt="cloud"
                 width={200}
                 height={200}
                 className="-mx-4"
               />
               <div className="text-gray3 ms-7">
-                <h1 className="text-3xl text-primary font-bold">25°C</h1>
-                <p>Thunderstorm</p>
-                <p>New York, USA</p>
-              </div>
-            </div>
-
-            <div className="flex justify-between mt-2">
-              <div className="flex flex-col items-center">
-                <FaLeaf className="text-yellow-500 text-xl" />
-                <p>Sun</p>
-              </div>
-
-              <div className="flex flex-col items-center">
-                <FaBoltLightning className="text-gray-600 text-xl" />
-                <p>Thunder</p>
-              </div>
-
-              <div className="flex flex-col items-center">
-                <FaBolt className="text-yellow-500 text-xl" />
-                <p>Lightning</p>
+                <h1 className="text-3xl text-primary font-bold">
+                  {kelvinToCelsius(weatherData?.main.temp) ?? 0}°C
+                </h1>
+                <p>{weatherData?.weather[0].description}</p>
+                <p>{weatherData?.name}</p>
               </div>
             </div>
           </div>
+          {/* Temperature */}
           <div className="bg-accent-1 border-grey-4 rounded-lg p-3 my-5">
             <h3 className="text-lg font-bold mb-2">Soil Quality</h3>
             <div className="border border-zinc-100 my-3"></div>
-
-            <div className="flex items-center justify-between mb-2">
-              <div className="flex flex-wrap items-center">
-                <FaCloudBolt className="text-grey-3 text-2xl mr-2" />
-                <p>Soil Moisture</p>
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex flex-wrap items-center">
+                  <FaCloudBolt className="text-grey-3 text-2xl mr-2" />
+                  <p>Temperature</p>
+                </div>
+                <div className="ms-10 text-red-500">
+                  {/* <p>{soilMoisturePercentage}%</p> */}
+                  <p>{parseFloat(temperature)?.toFixed(2)}°C</p>
+                </div>
               </div>
-              <div className="ms-10 text-yellow-500">
-                <p>{soilMoisturePercentage}%</p>
-              </div>
-            </div>
 
-            <div className="relative pt-1">
+              {/* <div className="relative pt-1">
               <div className="flex mb-2 items-center justify-between">
                 <div></div>
               </div>
@@ -186,19 +237,22 @@ export default function MainContent() {
                   ></div>
                 </div>
               </div>
-            </div>
-            <section className="my-3">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex flex-wrap items-center">
-                  <FaGlassWaterDroplet className="text-gray3 text-2xl mr-2" />
-                  <p>Ph</p>
-                </div>
-                <div className="ms-10 text-green-500">
-                  <p>{phPercentage}%</p>
-                </div>
-              </div>
+            </div> */}
+              {/* pH */}
 
-              <div className="relative pt-1">
+              <section className="my-3">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex flex-wrap items-center">
+                    <FaGlassWaterDroplet className="text-gray3 text-2xl mr-2" />
+                    <p>Ph</p>
+                  </div>
+                  <div className="ms-10 text-green-500">
+                    {/* <p>{phPercentage}%</p> */}
+                    <p>{parseFloat(ph)?.toFixed(2)}</p>
+                  </div>
+                </div>
+
+                {/* <div className="relative pt-1">
                 <div className="flex mb-2 items-center justify-between">
                   <div></div>
                 </div>
@@ -210,20 +264,24 @@ export default function MainContent() {
                     ></div>
                   </div>
                 </div>
-              </div>
-            </section>
-            <section className="my-3">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex flex-wrap items-center">
-                  <FaGlassWaterDroplet className="text-gray3 text-2xl mr-2" />
-                  <p>Ph</p>
+              </div> */}
+              </section>
+              {/* Moisture content */}
+              <section className="my-3">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex  items-center">
+                    <WiHumidity className="text-gray3 text-2xl mr-2" />
+                    <p>Moisture content</p>
+                  </div>
+                  <div className="ms-10 text-green-500">
+                    <p className="flex">
+                      <span>{parseFloat(soilMoisture)?.toFixed(2)}</span>
+                      <span>{" kPa"}</span>
+                    </p>
+                  </div>
                 </div>
-                <div className="ms-10 text-green-500">
-                  <p>{phPercentage}%</p>
-                </div>
-              </div>
 
-              <div className="relative pt-1">
+                {/* <div className="relative pt-1">
                 <div className="flex mb-2 items-center justify-between">
                   <div></div>
                 </div>
@@ -235,20 +293,22 @@ export default function MainContent() {
                     ></div>
                   </div>
                 </div>
-              </div>
-            </section>
-            <section className="my-3">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex flex-wrap items-center">
-                  <FaBowlFood className="text-gray3 text-2xl mr-2" />
-                  <p>Nutrient</p>
+              </div> */}
+              </section>
+              <section className="my-3">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex flex-wrap items-center">
+                    <FaBowlFood className="text-gray3 text-2xl mr-2" />
+                    <p>Humidity</p>
+                  </div>
+                  <div className="ms-10 text-blue-500 relative">
+                    {parseFloat(nutrients)?.toFixed(2)}
+                    {" g/m"}{" "}
+                    <span className="absolute text-[10px] mb-8">3</span>
+                  </div>
                 </div>
-                <div className="ms-10 text-blue-500">
-                  <p>{nutrientPercentage}%</p>
-                </div>
-              </div>
 
-              <div className="relative pt-1">
+                {/* <div className="relative pt-1">
                 <div className="flex mb-2 items-center justify-between">
                   <div></div>
                 </div>
@@ -260,21 +320,29 @@ export default function MainContent() {
                     ></div>
                   </div>
                 </div>
-              </div>
-            </section>
+              </div> */}
+              </section>
+            </div>
           </div>
         </section>
         <section>
           <div className="grid gap-6 sm:grid-cols-2">
             <Schedule
               title="Planting Schedule"
-              subtitle="Upcoming Planting"
-              data={plantingScheduleData}
+              // subtitle="Upcoming Planting"
+              // data={plantingScheduleData}
+              // crop={label}
+              text={plantingTime}
             />
             <Schedule
               title="Harvesting Schedule"
-              subtitle="Upcoming Harvesting"
-              data={harvestingScheduleData}
+              // subtitle="Upcoming Harvesting"
+              // crop={label}
+              text={
+                harvestTime &&
+                `While harvesting season for ${formData?.label} in ${formData?.country} is ${harvestTime} season`
+              }
+              // data={harvestingScheduleData}
             />
           </div>
         </section>

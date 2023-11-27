@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { GrAppsRounded } from "react-icons/gr";
 import { GiGreenhouse } from "react-icons/gi";
 import { TiWeatherPartlySunny } from "react-icons/ti";
@@ -50,12 +50,13 @@ const Sidebar = () => {
   const path = usePathname();
   console.log(path);
   const [toggleSidebar, setToggleSidebar] = React.useState(false);
+  const [userData, setUserData] = React.useState(null);
 
   const handleToggleSidebar = () => {
     setToggleSidebar(!toggleSidebar);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 1024) {
         setToggleSidebar(true);
@@ -69,6 +70,15 @@ const Sidebar = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
+  }, []);
+
+  useEffect(() => {
+    const storedUserData = localStorage.getItem("userData");
+
+    if (storedUserData) {
+      const parsedUserData = JSON.parse(storedUserData);
+      setUserData(parsedUserData);
+    }
   }, []);
 
   return (
@@ -127,9 +137,9 @@ const Sidebar = () => {
           FARMER
         </p>
         <div className="text-white flex gap-3">
-          <Avatar title={"Andrew Smith"} />
+          <Avatar title={userData?.name} />
           <p className={`${toggleSidebar ? "hidden" : "block"} `}>
-            Andrew Smith
+            {userData?.name}
           </p>
         </div>
         <hr
