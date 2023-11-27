@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -17,6 +17,9 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const fullname = useSelector((state) => state.auth.name)
+  const useremail = useSelector((state) => state.auth.email)
+  const token = useSelector((state) => state.auth.token)
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -47,7 +50,7 @@ export default function Login() {
       setError("Network error. Please try again.");
     }
   };
-
+  console.log(`fullname is: ${fullname}, useremail is: ${useremail}, token is: ${token}  ${name}`);
   return (
     <main className="bg-accent-1 p-10 py-24">
       <section className="grid sm:grid-cols-2 text[16px] gap-32">

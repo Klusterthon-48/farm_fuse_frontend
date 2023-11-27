@@ -7,6 +7,12 @@ import Update from "./components/homepage_components/Update";
 import Footer from "./components/footer";
 
 export default function Home() {
+  const fullname = useSelector((state) => state.auth.name)
+  const useremail = useSelector((state) => state.auth.email)
+  const token = useSelector((state) => state.auth.token)
+
+
+  console.log(`fullname is: ${fullname}, useremail is: ${useremail}, token is: ${token}`);
   return (
     <main className="bg-accent-1">
       <Navbar />
