@@ -5,10 +5,10 @@ import { createSlice } from "@reduxjs/toolkit";
 export const predictionSlice = createSlice({
   name: "prediction",
   initialState: {
-    ph: "",
-    temperature: "",
-    soilMoisture: "",
-    nutrients: "",
+    ph: "0",
+    temperature: "0",
+    soilMoisture: "0%",
+    nutrients: "0%",
     plantingTime: "",
     harvestTime: "",
   },

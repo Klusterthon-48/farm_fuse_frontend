@@ -1,102 +1,176 @@
-import React from "react";
-import { FaRegSun } from "react-icons/fa";
-import {
-  FaCalendar,
-  FaCheck,
-  FaChartBar,
-  FaPlus,
-  FaUser,
-  FaHouse,
-} from "react-icons/fa6";
-import Image from "next/image";
-import logo from "../../../public/dashboard_images/logo.png";
+"use client";
 
-export default function Sidebar({ selectedItem, onItemClick }) {
-  const menuItems = [
-    { id: "dashboard", text: "Dashboard", icon: <FaHouse /> },
-    { id: "myFarm", text: "My Farm", icon: <FaUser /> },
-    { id: "weather", text: "Weather", icon: <FaRegSun /> },
-    {
-      id: "planningSchedule",
-      text: "Planning Schedule",
-      icon: <FaCalendar />,
-    },
-    {
-      id: "harvestingSchedule",
-      text: "Harvesting Schedule",
-      icon: <FaCheck />,
-    },
-    { id: "analytics", text: "Analytics", icon: <FaChartBar /> },
-  ];
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
+import { GrAppsRounded } from "react-icons/gr";
+import { GiGreenhouse } from "react-icons/gi";
+import { TiWeatherPartlySunny } from "react-icons/ti";
+import { GrSchedulePlay } from "react-icons/gr";
+import { FaCircleChevronLeft, FaRegCalendarCheck } from "react-icons/fa6";
+import { GrAnalytics } from "react-icons/gr";
+import Avatar from "../utils/Avatar";
+import { IoChevronBackSharp, IoChevronForwardSharp } from "react-icons/io5";
+import { usePathname } from "next/navigation";
+
+const navLinks = [
+  {
+    logo: <GrAppsRounded />,
+    link: "/dashboard",
+    title: "Dashboard",
+  },
+  {
+    logo: <GiGreenhouse />,
+    link: "/dashboard/my-farm",
+    title: "My Farm",
+  },
+  {
+    logo: <TiWeatherPartlySunny />,
+    link: "/dashboard/weather",
+    title: "Weather",
+  },
+  {
+    logo: <GrSchedulePlay />,
+    link: "/dashboard/planting-schedule",
+    title: "Planting Schedule",
+  },
+  {
+    logo: <FaRegCalendarCheck />,
+    link: "/dashboard/harvesting-schedule",
+    title: "Harvesting Schedule",
+  },
+  {
+    logo: <GrAnalytics />,
+    link: "/dashboard/analytics",
+    title: "Analytics",
+  },
+];
+
+const Sidebar = () => {
+  const path = usePathname();
+  console.log(path);
+  const [toggleSidebar, setToggleSidebar] = React.useState(false);
+
+  const handleToggleSidebar = () => {
+    setToggleSidebar(!toggleSidebar);
+  };
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 1024) {
+        setToggleSidebar(true);
+      } else {
+        setToggleSidebar(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
-    <div className="sidebar bg-black-3 text-white min-h-screen flex flex-col lg:w-60 p-5">
-      <div className="lg:flex-shrink-0 relative">
-        <div className="py-4 mb-4">
-          <Image
-            src={logo}
-            alt="Logo"
-            width={100}
-            heigth={150}
-          
-          />
-        </div>
+    <div
+      className={`${
+        toggleSidebar ? "w-fit" : "min-w-[310px]"
+      } transition duration-200 top-0  
       
-        <div className=" flex flex-wrap mb-8">
-          <div className="h-3 w-3 bg-primary rounded-full inline-block mx-1"></div>
-          <div className="h-3 w-3 bg-yellow-500 rounded-full inline-block mx-1"></div>
-          <div className="h-3 w-3 bg-secondary rounded-full inline-block mx-1"></div>
+       h-screen bg-black-2 relative`}
+    >
+      <Link href="/">
+        <div className="p-[35px]">
+          {toggleSidebar ? (
+            <Image
+              src="/dashboard_images/logo.svg"
+              alt="farmfuse logo"
+              width={50}
+              height={50}
+              // className="block md:hidden"
+            />
+          ) : (
+            <Image
+              src="/dashboard_images/farmfuse-logo.svg"
+              alt="farmfuse logo"
+              width={200}
+              height={200}
+              // className="hidden md:block"
+            />
+          )}
         </div>
-       
-        <div className="flex flex-wrap"> 
-        <div className="bg-secondary rounded-full w-8 h-8 flex items-center justify-center  mt-2 me-2">
-            <span className="text-black font-bold">AS</span>
-          </div>
-          <div>
-          <p className="text-sm text-gray3">Farmer</p>
-          <h5 className="text-lg font-semibold">Andrew Smith</h5>
+      </Link>
+      <button onClick={handleToggleSidebar}>
+        <div
+          className={
+            "absolute chevron right-[-5px] rounded-full p-[1px] bg-grey-1 border border-[#307C31]"
+          }
+        >
+          {toggleSidebar ? (
+            <IoChevronForwardSharp className="text-secondary " />
+          ) : (
+            <IoChevronBackSharp className="text-secondary " />
+          )}
         </div>
-        </div>
-      
-        <p className="text-sm mt-4 mb-2 text-gray3">Main</p>
-      
-        <ul className="py-4">
-          {menuItems.map((item) => (
-            <li
-              key={item.id}
-              className={`py-2 cursor-pointer ${
-                selectedItem === item.id ? "bg-gray-700" : ""
-              }`}
-              onClick={() => onItemClick(item.id)}
-            >
-              <div className="flex flex-wrap items-center text-gray3">
-              <span className=" mr-3">{item.icon}</span>
-             
-             <span className="hidden lg:inline">{item.text}</span>
-              </div>
-              
-            </li>
-          ))}
-        </ul>
+      </button>
+      <div className="flex gap-1 px-[35px] pb-[35px]">
+        <div className="dot bg-[#FF5A52]" />
+        <div className="dot bg-[#E6C02A]" />
+        <div className="dot bg-[#53C22B]" />
       </div>
-      <div className="py-4 lg:mt-auto text-center ">
-        <div className="mb-4 bg-black-3 border border-grey3 rounded-3xl p-4">
-        
-          <h4 className="text-base font-bold mb-2">Let's Start</h4>
-          <p className="text-[13px] text-gray3">
-            Adding new location/crops couldn't be easier
+      <div className="pl-[35px]">
+        <p
+          className={`text-[11px] text-[rgba(255,255,255,0.32)] mb-3  ${
+            toggleSidebar ? "pl-0" : "pl-[50px]"
+          }  pl-0  inline-block`}
+        >
+          FARMER
+        </p>
+        <div className="text-white flex gap-3">
+          <Avatar title={"Andrew Smith"} />
+          <p className={`${toggleSidebar ? "hidden" : "block"} `}>
+            Andrew Smith
           </p>
-          <button className="bg-primary text-sm text-white py-3 px-5 rounded-lg my-3 lg:mr-2">
-            <FaPlus className="inline mr-1" />
-            Select Location
-          </button>
-          
-          <button className="bg-primary text-white py-3 text-sm px-8 rounded-lg ">
-            <FaPlus className="inline mr-1" />
-            Select Crops
-          </button>
+        </div>
+        <hr
+          className={`my-[16.5px] hr border-[#ffffff1b]  ${
+            toggleSidebar ? "max-w-[20px]" : "max-w-[200px]"
+          }`}
+        />
+
+        <p
+          className={`text-[11px] text-[rgba(255,255,255,0.32)] mb-4 ${
+            toggleSidebar ? "pl-2" : "pl-[15px]"
+          } inline-block`}
+        >
+          MAIN
+        </p>
+        <div className="flex gap-3 flex-col">
+          {navLinks.map((item) => (
+            <div key={item.title}>
+              <Link
+                href={item.link}
+                className={`${toggleSidebar ? "inline-block" : "block"} `}
+              >
+                <div
+                  className={`flex ${
+                    toggleSidebar ? "w-fit" : "w-[90%]"
+                  } group-hover:bg-radial w-fit md:w-[90%] ${
+                    path === item.link ? "link-active" : ""
+                  } link-hover hover:bg-radial items-center gap-2 text-grey-3 border border-transparent z-10 p-3`}
+                >
+                  <div className="text-2xl">{item.logo}</div>
+                  <p className={`${toggleSidebar ? "hidden" : "block"}`}>
+                    {item.title}
+                  </p>
+                </div>
+              </Link>
+            </div>
+          ))}
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default Sidebar;

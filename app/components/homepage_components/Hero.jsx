@@ -6,6 +6,7 @@ import coin_icon from "../../../public/homepage_images/coin_icon.png";
 import finane_icon from "../../../public/homepage_images/finance_icon.png";
 import bank_icon from "../../../public/homepage_images/bank_icon.png";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -14,7 +15,7 @@ export default function Hero() {
         <p className=" bg-accent text-sm font-bold w-44 rounded-md  px-2 text-center py-1 border-t-gray-400">
           Embrace the Future
         </p>
-        <h2 className="text-3xl lg:text-5xl font-semibold md:w-[85%] py-7 leading-snug md:leading-normal">
+        <h2 className="text-3xl lg:text-5xl font-semibold md:w-[85%] py-7 leading-snug md:leading-2">
           Optimize Your Crops, Increase Yields, and Reduce Costs
         </h2>
         <p className="w-full md:w-[80%]">
@@ -22,12 +23,18 @@ export default function Hero() {
           crop yields.
         </p>
         <div className="my-10">
-          <button className="me-2 p-2 border-black border rounded-md px-6">
+          <Link
+            href="/login"
+            className="me-2 p-2 border-black border rounded-md px-6"
+          >
             Log In
-          </button>
-          <button className="bg-primary rounded-md text-white p-2 ms-2">
+          </Link>
+          <Link
+            href="/signup"
+            className="bg-primary rounded-md text-white p-2 ms-2"
+          >
             Get Started
-          </button>
+          </Link>
           <p className="font-semibold mt-16">Sponsored partners:</p>
           <div className="flex gap-8 flex-wrap text-zinc-400  pt-8 ">
             <div className="sponsors">

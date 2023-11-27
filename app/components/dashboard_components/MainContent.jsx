@@ -1,13 +1,8 @@
+"use client";
 
-
-import React from "react";
-import {
-  FaLeaf,
-  FaBolt,
-  FaApple,
-  FaWater,
-  FaNutritionix,
-} from "react-icons/fa";
+import Image from "next/image";
+import React, { useState } from "react";
+import { FaLeaf, FaBolt, FaApple, FaNutritionix } from "react-icons/fa";
 import {
   FaBoltLightning,
   FaBowlFood,
@@ -17,154 +12,154 @@ import {
   FaPlantWilt,
   FaRegLightbulb,
 } from "react-icons/fa6";
-const token = useSelector((state) => state.auth.token)
+
+import Schedule from "../utils/Schedule";
+import Info from "../utils/Info";
+import FarmDetailsModal from "../dashboard_components/FarmDetailsModal";
+import { FiEdit3 } from "react-icons/fi";
+import { useSelector } from "react-redux";
+// import { SunnyCloud } from "../../../public/dashboard_images/sunny-cloud.svg";
+import {
+  harvestingScheduleData,
+  plantingScheduleData,
+  recommendations,
+} from "../utils/constants";
 
 export default function MainContent({ selectedItem }) {
   const soilMoisturePercentage = 30;
   const phPercentage = 70;
   const nutrientPercentage = 50;
 
-const token = useSelector((state) => state.auth.token)
-  const handlePredict = async (e) => {
-    e.preventDefault();
-  
-    try {
-      setIsLoading(true);
-      setError(null);
-  
-      const response = await axios.post(
-        "https://farm-fuse-backend.vercel.app/api/predict",
-        {
-          label,
-          location,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-  
-      const data = response.json();
-  
-      // Handle the response as needed, for example:
-      console.log("Prediction result:", data);
-  
-    } catch (error) {
-      setError(error.message || "An error occurred");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-  
+  const ph = useSelector((state) => state.prediction.ph);
+  const temperature = useSelector((state) => state.prediction.temperature);
+  const soilMoisture = useSelector((state) => state.prediction.soilMoisture);
+  const nutrients = useSelector((state) => state.prediction.nutrients);
+  const plantingTime = useSelector((state) => state.prediction.plantingTime);
+  const harvestTime = useSelector((state) => state.prediction.harvestTime);
 
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const handleFarmDetails = () => {
+    setIsPopupOpen(true);
+  };
+
+  const handleClosePopup = () => {
+    setIsPopupOpen(false);
+  };
+
+  console.log(
+    temperature,
+    ph,
+    soilMoisture,
+    nutrients,
+    plantingTime,
+    harvestTime,
+  );
 
   return (
     <div className="main-content text-black-3">
       <div className="  flex  justify-center  my-4">
-        <p className="w-64 bg-accent text-center p-2 rounded-full">
+        <p className="w-64 bg-accent-1 border-grey-4 text-center p-2 rounded-full">
           Sunday 12th November, 2023
         </p>
       </div>
-      <section className="flex flex-wrap justify-around">
-        <div className="bg-accent rounded-lg my-5 p-3">
-          <h3 className="text-lg font-bold mb-2">Farm Overview</h3>
-          <div className="border border-zinc-100 my-3"></div>
-          <div className="bg-white rounded-full text-sm text-gray3 text-center p-2">
-            <p>Last Update: 5.00am</p>
-          </div>
-          <div className="flex text-gray3 my-4">
-            <FaCloudMoonRain className="text-white text-4xl ml-6" />
-            <div className="ms-7">
-              <h1 className="text-3xl text-primary font-bold ">32°C</h1>
-              <p>Sunny Cloudy</p>
-              <p>New York, USA</p>
-            </div>
-          </div>
+      <button
+        className="flex gap-3 items-center bg-primary rounded-full text-white py-3 px-5"
+        onClick={handleFarmDetails}
+      >
+        <p>Edit Farm Details </p>
+        <FiEdit3 />
+      </button>
 
-          <p className="my-2 font-bold">Crops:</p>
-          <div className="flex justify-between">
-            <div className="text-center">
-              <p>Tomato</p>
-              <FaPlantWilt className="text-green-500 text-xl" />
+      <FarmDetailsModal isOpen={isPopupOpen} onClose={handleClosePopup} />
+      <section>
+        <section className="grid md:grid-cols-3 gap-6 ">
+          <div className="bg-accent-1 border-grey-4 rounded-lg my-5 p-3">
+            <h3 className="text-lg font-bold mb-2">Farm Overview</h3>
+            <div className="border border-zinc-100 my-3"></div>
+            <div className="bg-white rounded-full text-sm text-gray3 text-center p-2">
+              <p>Last Update: 5.00am</p>
             </div>
-
-            <div className="text-center">
-              <p>Carrot</p>
-              <FaNutritionix className="text-orange-500 text-xl" />
-            </div>
-
-            <div className="text-center">
-              <p>Apple</p>
-              <FaApple className="text-red-500 text-xl" />
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-accent rounded-lg my-5 p-5">
-          <h3 className="text-lg font-bold mb-2">Weather Updates</h3>
-          <div className="border border-zinc-100 my-3"></div>
-          <div className="flex my-11">
-            <FaRegLightbulb className="text-white text-4xl ml-4" />
-            <div className="text-gray3 ms-7">
-              <h1 className="text-3xl text-primary font-bold">25°C</h1>
-              <p>Thunderstorm</p>
-              <p>New York, USA</p>
-            </div>
-          </div>
-
-          <div className="flex justify-between mt-2">
-            <div className="text-center">
-              <FaLeaf className="text-yellow-500 text-xl" />
-              <p>Sun</p>
+            <div className="flex items-center text-gray3 my-4">
+              <Image
+                src="/dashboard_images/sunny-cloud.svg"
+                alt="cloud"
+                width={200}
+                height={200}
+                className="-mx-4"
+              />
+              <div className="ms-7">
+                <h1 className="text-3xl text-primary font-bold ">32°C</h1>
+                <p>Sunny Cloudy</p>
+                <p>New York, USA</p>
+              </div>
             </div>
 
-            <div className="text-center">
-              <FaBoltLightning className="text-gray-600 text-xl" />
-              <p>Thunder</p>
-            </div>
+            <p className="my-2 font-bold">Crops:</p>
+            <div className="flex justify-between">
+              <div className="flex flex-col items-center">
+                <p>Tomato</p>
+                <FaPlantWilt className="text-green-500 text-xl" />
+              </div>
 
-            <div className="text-center">
-              <FaBolt className="text-yellow-500 text-xl" />
-              <p>Lightning</p>
-            </div>
-          </div>
-        </div>
-        <div className="bg-accent rounded-lg p-3 my-5">
-          <h3 className="text-lg font-bold mb-2">Soil Quality</h3>
-          <div className="border border-zinc-100 my-3"></div>
+              <div className="flex flex-col items-center">
+                <p>Carrot</p>
+                <FaNutritionix className="text-orange-500 text-xl" />
+              </div>
 
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex flex-wrap items-center">
-              <FaCloudBolt className="text-grey-3 text-2xl mr-2" />
-              <p>Soil Moisture</p>
-            </div>
-            <div className="ms-10 text-yellow-500">
-              <p>{soilMoisturePercentage}%</p>
-            </div>
-          </div>
-
-          <div className="relative pt-1">
-            <div className="flex mb-2 items-center justify-between">
-              <div></div>
-            </div>
-            <div className="flex flex-col">
-              <div className="bg-yellow-200 h-2 rounded-full">
-                <div
-                  style={{ width: `${soilMoisturePercentage}%` }}
-                  className="shadow-none bg-yellow-500 h-2 rounded-full"
-                ></div>
+              <div className="flex flex-col items-center">
+                <p>Apple</p>
+                <FaApple className="text-red-500 text-xl" />
               </div>
             </div>
           </div>
-          <section className="my-3">
+
+          <div className="bg-accent-1 border-grey-4 rounded-lg my-5 p-5">
+            <h3 className="text-lg font-bold mb-2">Weather Updates</h3>
+            <div className="border border-zinc-100 my-3"></div>
+            <div className="flex items-center my-11">
+              <Image
+                src="/dashboard_images/thunder.svg"
+                alt="cloud"
+                width={200}
+                height={200}
+                className="-mx-4"
+              />
+              <div className="text-gray3 ms-7">
+                <h1 className="text-3xl text-primary font-bold">25°C</h1>
+                <p>Thunderstorm</p>
+                <p>New York, USA</p>
+              </div>
+            </div>
+
+            <div className="flex justify-between mt-2">
+              <div className="flex flex-col items-center">
+                <FaLeaf className="text-yellow-500 text-xl" />
+                <p>Sun</p>
+              </div>
+
+              <div className="flex flex-col items-center">
+                <FaBoltLightning className="text-gray-600 text-xl" />
+                <p>Thunder</p>
+              </div>
+
+              <div className="flex flex-col items-center">
+                <FaBolt className="text-yellow-500 text-xl" />
+                <p>Lightning</p>
+              </div>
+            </div>
+          </div>
+          <div className="bg-accent-1 border-grey-4 rounded-lg p-3 my-5">
+            <h3 className="text-lg font-bold mb-2">Soil Quality</h3>
+            <div className="border border-zinc-100 my-3"></div>
+
             <div className="flex items-center justify-between mb-2">
               <div className="flex flex-wrap items-center">
-                <FaGlassWaterDroplet className="text-gray3 text-2xl mr-2" />
-                <p>Ph</p>
+                <FaCloudBolt className="text-grey-3 text-2xl mr-2" />
+                <p>Soil Moisture</p>
               </div>
-              <div className="ms-10 text-green-500">
-                <p>{phPercentage}%</p>
+              <div className="ms-10 text-yellow-500">
+                <p>{soilMoisturePercentage}%</p>
               </div>
             </div>
 
@@ -173,88 +168,212 @@ const token = useSelector((state) => state.auth.token)
                 <div></div>
               </div>
               <div className="flex flex-col">
-                <div className="bg-green-200 h-2 rounded-full">
+                <div className="bg-yellow-200 h-2 rounded-full">
                   <div
-                    style={{ width: `${phPercentage}%` }}
-                    className="shadow-none bg-green-500 h-2 rounded-full"
+                    style={{ width: `${soilMoisturePercentage}%` }}
+                    className="shadow-none bg-yellow-500 h-2 rounded-full"
                   ></div>
                 </div>
               </div>
             </div>
-          </section>
-          <section className="my-3">
-            <div className="flex items-center justify-between mb-2">
-              <div className="flex flex-wrap items-center">
-                <FaBowlFood className="text-gray3 text-2xl mr-2" />
-                <p>Nutrient</p>
+            <section className="my-3">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex flex-wrap items-center">
+                  <FaGlassWaterDroplet className="text-gray3 text-2xl mr-2" />
+                  <p>Ph</p>
+                </div>
+                <div className="ms-10 text-green-500">
+                  <p>{phPercentage}%</p>
+                </div>
               </div>
-              <div className="ms-10 text-blue-500">
-                <p>{nutrientPercentage}%</p>
-              </div>
-            </div>
 
-            <div className="relative pt-1">
-              <div className="flex mb-2 items-center justify-between">
-                <div></div>
+              <div className="relative pt-1">
+                <div className="flex mb-2 items-center justify-between">
+                  <div></div>
+                </div>
+                <div className="flex flex-col">
+                  <div className="bg-green-200 h-2 rounded-full">
+                    <div
+                      style={{ width: `${phPercentage}%` }}
+                      className="shadow-none bg-green-500 h-2 rounded-full"
+                    ></div>
+                  </div>
+                </div>
               </div>
-              <div className="flex flex-col">
-                <div className="bg-blue-200 h-2 rounded-full">
-                  <div
-                    style={{ width: `${nutrientPercentage}%` }}
-                    className="shadow-none bg-blue-500 h-2 rounded-full"
-                  ></div>
+            </section>
+            <section className="my-3">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex flex-wrap items-center">
+                  <FaGlassWaterDroplet className="text-gray3 text-2xl mr-2" />
+                  <p>Ph</p>
+                </div>
+                <div className="ms-10 text-green-500">
+                  <p>{phPercentage}%</p>
+                </div>
+              </div>
+
+              <div className="relative pt-1">
+                <div className="flex mb-2 items-center justify-between">
+                  <div></div>
+                </div>
+                <div className="flex flex-col">
+                  <div className="bg-green-200 h-2 rounded-full">
+                    <div
+                      style={{ width: `${phPercentage}%` }}
+                      className="shadow-none bg-green-500 h-2 rounded-full"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section className="my-3">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex flex-wrap items-center">
+                  <FaBowlFood className="text-gray3 text-2xl mr-2" />
+                  <p>Nutrient</p>
+                </div>
+                <div className="ms-10 text-blue-500">
+                  <p>{nutrientPercentage}%</p>
+                </div>
+              </div>
+
+              <div className="relative pt-1">
+                <div className="flex mb-2 items-center justify-between">
+                  <div></div>
+                </div>
+                <div className="flex flex-col">
+                  <div className="bg-blue-200 h-2 rounded-full">
+                    <div
+                      style={{ width: `${nutrientPercentage}%` }}
+                      className="shadow-none bg-blue-500 h-2 rounded-full"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </section>
+        <section>
+          <div className="grid gap-6 sm:grid-cols-2">
+            <Schedule
+              title="Planting Schedule"
+              subtitle="Upcoming Planting"
+              data={plantingScheduleData}
+            />
+            <Schedule
+              title="Harvesting Schedule"
+              subtitle="Upcoming Harvesting"
+              data={harvestingScheduleData}
+            />
+          </div>
+        </section>
+
+        <section className="grid sm:grid-cols-2 gap-6">
+          <div>
+            <div className="bg-accent-1 border-grey-4 rounded-lg p-8 my-3">
+              <h3 className="text-[20px] mb-[24px] font-medium">
+                Planting and Soil Tips
+              </h3>
+              <div className="flex flex-col gap-3">
+                <h3 className="text-grey-3 text-[18px] mb-[17px]">
+                  Fall Planting
+                </h3>
+                <div className="flex items-center gap-3 ">
+                  <div className="flex gap-3">
+                    <Image
+                      src="/dashboard_images/maize.svg"
+                      alt=""
+                      width={15}
+                      height={15}
+                    />
+                    <p>
+                      Enhance soil health with cover crops! More tips in our
+                      blog.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col gap-3 mt-8">
+                <h3 className="text-grey-3 text-[18px] mb-[17px]">
+                  Spring Soil Enrichment
+                </h3>
+                <div className="flex items-center gap-3 ">
+                  <div className="flex gap-3">
+                    <Image
+                      src="/dashboard_images/maize.svg"
+                      alt=""
+                      width={15}
+                      height={15}
+                    />
+                    <p>
+                      Use compost and manure for a thriving spring planting
+                      season.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-          </section>
-        </div>
-
-        <div className="bg-accent rounded-lg p-3 my-5">
-          <h3 className="text-lg font-bold mb-2">Quick Links</h3>
-          <div className="border border-zinc-100 my-3"></div>
-          <div className="mt-2">
-            <label
-              htmlFor="selectCrops"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Select Crops
-            </label>
-            <select
-              id="selectCrops"
-              name="selectCrops"
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md bg-white"
-            >
-              <option value="crop1">Crop 1</option>
-              <option value="crop2">Crop 2</option>
-              <option value="crop3">Crop 3</option>
-            </select>
           </div>
 
-          <div className="mt-4">
-            <label
-              htmlFor="selectLocation"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Select Location
-            </label>
-            <select
-              id="selectLocation"
-              name="selectLocation"
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md bg-white"
-            >
-              <option value="location1">Location 1</option>
-              <option value="location2">Location 2</option>
-              <option value="location3">Location 3</option>
-            </select>
+          <div>
+            <div className="bg-accent-1 border-grey-4 rounded-lg p-8 my-3">
+              <h3 className="text-[20px] mb-[24px] font-medium">
+                Weather and Pest Alerts
+              </h3>
+              <div className="flex flex-col gap-3">
+                <h3 className="text-grey-3 text-[18px] mb-[17px]">
+                  Frost Advisory
+                </h3>
+                <div className="flex items-center gap-3 ">
+                  <div className="flex gap-3">
+                    <Image
+                      src="/dashboard_images/maize.svg"
+                      alt=""
+                      width={15}
+                      height={15}
+                    />
+                    <p>
+                      Protect crops on frosty nights. Check weather overview for
+                      alerts.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col gap-3 mt-8">
+                <h3 className="text-grey-3 text-[18px] mb-[17px]">
+                  Aphid Prevention Alert
+                </h3>
+                <div className="flex items-center gap-3 ">
+                  <div className="flex gap-3">
+                    <Image
+                      src="/dashboard_images/maize.svg"
+                      alt=""
+                      width={15}
+                      height={15}
+                    />
+                    <p>
+                      Keep aphids at bay with ladybugs and lacewings. Explore
+                      our guide.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-
-          <div className="mt-4 space-y-2">
-            <button className="p-2 border border-gray-300 rounded-md bg-white">
-              Planting Schedule
-            </button>
-            <button className="p-2 border border-gray-300 rounded-md bg-white">
-              Harvesting Schedule
-            </button>
+        </section>
+        <div>
+          <div className="bg-accent-1 border-grey-4 rounded-lg p-8 my-3 max-w-[500px]">
+            <h2 className="text-[20px] mb-[24px] font-medium">
+              Recommendations
+            </h2>
+            <div className="flex flex-col gap-3 ">
+              {recommendations.map((item, i) => (
+                <div className="flex items-center gap-3" key={i}>
+                  <Image src={item.icon} alt="" width={15} height={15} />
+                  <p>{item.text}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>

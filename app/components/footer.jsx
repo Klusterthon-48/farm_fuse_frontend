@@ -6,7 +6,7 @@ import { BiLogoLinkedin, BiLogoFacebook, BiLogoTwitter } from "react-icons/bi";
 
 const Footer = () => {
   return (
-    <div className="bg-primary mt-[50px]">
+    <div className="bg-primary mt-[50px] text-white">
       <div className=" max-w-[1200px] mx-auto w-[90%] pt-[100px] pb-[94px]">
         <div className="flex flex-col lg:flex-row w-full justify-between lg:items-center">
           <div className="flex  justify-between flex-wrap lg:w-[50%] gap-16 ">
@@ -45,9 +45,9 @@ const Footer = () => {
         <hr className="opacity-[0.2] mt-[26px] mb-[42px]" />
         <div className="flex flex-col md:flex-row justify-between items-center gap-9">
           <Image
-            src="/footer_images/farmfuse-logo.png"
+            src="/footer_images/farmfuse-logo.svg"
             alt="farmfuse logo"
-            width={600}
+            width={200}
             height={100}
             className="w-[200px] h-auto"
           />

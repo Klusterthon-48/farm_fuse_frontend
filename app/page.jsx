@@ -5,21 +5,17 @@ import WhyChooseUs from "./components/homepage_components/WhyChooseUs";
 import Prediction from "./components/homepage_components/Prediction";
 import Update from "./components/homepage_components/Update";
 import Footer from "./components/footer";
+import Started from "./components/homepage_components/Started";
 
-export default function Home() {
-  const fullname = useSelector((state) => state.auth.name)
-  const useremail = useSelector((state) => state.auth.email)
-  const token = useSelector((state) => state.auth.token)
-
-
-  console.log(`fullname is: ${fullname}, useremail is: ${useremail}, token is: ${token}`);
+export default function Home() { 
   return (
-    <main className="bg-accent-1">
+    <main className="bg-accent-1 overflow-hidden w-screen">
       <Navbar />
       <Hero />
       <Features />
       <WhyChooseUs />
       <Prediction />
+      <Started />
       <Update />
       <Footer />
     </main>

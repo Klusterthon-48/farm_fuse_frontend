@@ -8,7 +8,9 @@ import Image from "next/image";
 import logo from "../../../public/auth_images/logo.png";
 import { signUp } from "../../redux/slices/authSlice";
 import axios from "axios";
-import { NEXT_CACHE_REVALIDATE_TAG_TOKEN_HEADER } from "next/dist/lib/constants";
+import overlay from "../../../public/auth_images/overlay.svg";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Signup() {
   const dispatch = useDispatch();
@@ -26,17 +28,26 @@ export default function Signup() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-  
     try {
       setIsLoading(true);
       setError(null);
-  
-      if (password !== confirmPassword) {
-        setError("Passwords do not match");
+
+      if (!password) {
         setIsLoading(false);
+        toast.error("Password is required");
         return;
       }
-  
+      if (!confirmPassword) {
+        setIsLoading(false);
+        toast.error("Confirm Password is required");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        setIsLoading(false);
+        toast.error("Passwords do not match");
+        return;
+      }
       const response = await axios.post(
         "https://farm-fuse-backend.vercel.app/api/register",
         {
@@ -52,22 +63,28 @@ export default function Signup() {
       );
   
       const json = response.data;
-  
-      // Check for a successful registration status code (e.g., 201 or 200)
-      if (response.status === 201 || response.status === 200) {
-        dispatch(signUp({ name, email, token: json.token }));
-        router.push("/login");
+      if (response.status === 409) {
+        setIsLoading(false);
+        toast.error("Email already exists");
+        return;
+      }
+
+      if (response.status === 200 || response.status === 201) {
+        setIsLoading(false);
+        dispatch(signUp({name, email}));
+        toast.success("Account created successfully");
+        router.push("/success");
       } else {
         setError(json.error.message || "An error occurred");
       }
     } catch (error) {
-      setError(error.message || "An error occurred");
+      setError(error.message);
     } finally {
       setIsLoading(false);
     }
   };
   
-console.log(`fullname is: ${fullname}, useremail is: ${useremail}, token is: ${token}  ${name}`);
+
   return (
     <main className="bg-accent-1 p-5 sm:p-10 py-24">
       <section className="grid sm:grid-cols-2 gap-8 sm:text-sm md:text-base lg:text-base">
@@ -137,7 +154,7 @@ console.log(`fullname is: ${fullname}, useremail is: ${useremail}, token is: ${t
 
             <div className="my-7 flex items-center">
               <input type="checkbox" />
-              <small className="ms-2 text-gray3">
+              <small className="ms-2 text-grey-3">
                 I Agree to Terms and Privacy
               </small>
             </div>
@@ -167,17 +184,25 @@ console.log(`fullname is: ${fullname}, useremail is: ${useremail}, token is: ${t
             </Link>
           </p>
         </div>
-        <div className="bg-primary flex items-center text-white">
+        <div className=" h-screen w-1/2 hidden   text-white login-grad md:flex pt-[204px] relative">
+          <Image
+            src={overlay}
+            alt="logo"
+            width={200}
+            height={200}
+            className="opacity-[0.2] absolute top-9 right-[30%]"
+          />
           <div className="px-5 sm:px-20">
             <p className="text-sm sm:text-base">WELCOME TO</p>
-            <h3 className="text-xl sm:text-3xl py-5">Farmfuse</h3>
-            <div className="border-b-white w-10 sm:w-20 border mb-5"></div>
+            <h3 className="text-4xl py-5 font-medium">Farmfuse</h3>
+            <div className="border-b-white w-10 sm:w-20 border mb-5" />
             <small className="text-xs sm:text-sm">
               Create your account to access the dashboard
             </small>
           </div>
         </div>
       </section>
+      <ToastContainer />
     </main>
   );
 }

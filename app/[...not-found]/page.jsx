@@ -14,7 +14,7 @@ export default function NotFound() {
         We couldn't find the page you were looking for.
       </p>
       <p className="text-black-3 mb-8">
-        Go back to the
+        Go back to the{" "}
         <Link href="/" className="text-secondary underline">
           homepage
         </Link>
@@ -22,12 +22,14 @@ export default function NotFound() {
       <Image
         src={error}
         alt="404 Image"
+        width={200}
+        height={200}
         className="w-48 h-48 object-cover rounded-full shadow-md mb-8"
       />
       <p className="text-black-3">
-        Need assistance? Contact our support team at
+        Need assistance? Contact our support team at{" "}
         <a
-          href="mailto:support@example.com"
+          href="mailto:support@farmfuse.com"
           className="text-secondary underline"
         >
           farmfuse@gmail.com

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import React from "react";
-import logo from "../../public/navbar_images/logo.png";
+import logo from "../../public/navbar_images/logo.svg";
 import Link from "next/link";
 import Slider from "./homepage_components/Slider";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -24,6 +24,7 @@ export default function Navbar() {
     console.log("User logged out");
   };
 
+
   const handleShow = () => {
     setShowMenu(!showMenu);
   };
@@ -32,7 +33,7 @@ export default function Navbar() {
       <Slider />
       <div className="flex w-[90%] max-w-[1200px] font-[500] text-black-3  justify-between bg-transparent items-center py-4 text-[16px] mx-auto">
         <Link href="/">
-          <Image src={logo} alt="logo" />
+          <Image src={logo} alt="logo" width={200} height={200} />
         </Link>
         <div className="hidden lg:flex ">
           <Link href="/" className="mx-2">
@@ -50,6 +51,9 @@ export default function Navbar() {
           <Link href="/" className="mx-2">
             About us
           </Link>
+          <Link href="/dashboard" className="mx-2">
+            Dashboard
+          </Link>
           <button onClick={handleLogout} className="mx-2">
             Logout
           </button>
@@ -59,6 +63,8 @@ export default function Navbar() {
         <div
           className={`flex flex-col gap-6 absolute items-center right-0 transition-transform duration-200 top-[55px] ${
             showMenu ? "translate-x-0" : "translate-x-full"
+          } ${
+            showMenu ? "flex" : "hidden"
           } bg-accent-1 px-10 pb-10 pt-4  shadow-lg`}
         >
           <button className="flex self-start " onClick={handleShow}>
@@ -94,10 +100,15 @@ export default function Navbar() {
 
         <div className="flex gap-4">
           <div className="hidden md:flex">
-            <button className="me-3 p-2 ">Log In</button>
-            <button className="bg-primary rounded-md text-white p-2 ms-3">
+            <Link href="/login" className="me-3 p-2 ">
+              Log In
+            </Link>
+            <Link
+              href="/signup"
+              className="bg-primary rounded-md text-white p-2 ms-3"
+            >
               Sign Up
-            </button>
+            </Link>
           </div>
           <button className="lg:hidden" onClick={handleShow}>
             <GiHamburgerMenu className="text-2xl" />
