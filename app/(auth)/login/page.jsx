@@ -39,10 +39,18 @@ export default function Login() {
       );
 
       const json = response.data;
-      console.log("Response status:", response.status);
-      console.log("Response data:", json);
+      // console.log("Response status:", response.status);
+      // console.log("Response data:", json);
 
       if (response.status === 200 && json.success) {
+        localStorage.setItem(
+          "userData",
+          JSON.stringify({
+            name: json.payload.farmer.name,
+            email: json.payload.farmer.email,
+            token: json.payload.token,
+          })
+        );
         dispatch(
           login({
             name: json.payload.farmer.name,
@@ -50,7 +58,7 @@ export default function Login() {
             token: json.payload.token,
           })
         );
-
+        // console.log(email);
         toast.success("Login successful");
         router.push("/dashboard");
       } else {

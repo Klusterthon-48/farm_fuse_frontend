@@ -11,12 +11,17 @@ export const predictionSlice = createSlice({
     nutrients: "0%",
     plantingTime: "",
     harvestTime: "",
+    country: "Kenya",
+    label: "Maize",
+    farmDetails: null,
   },
   reducers: {
+    setFarmDetails: (state, action) => {
+      state.farmDetails = action.payload;
+    },
     setPh: (state, action) => {
       state.ph = action.payload;
     },
-
     setNutrient: (state, action) => {
       state.nutrients = action.payload;
     },
@@ -32,6 +37,12 @@ export const predictionSlice = createSlice({
     setHarvestTime: (state, action) => {
       state.harvestTime = action.payload;
     },
+    setCountry: (state, action) => {
+      state.country = action.payload;
+    },
+    setLabel: (state, action) => {
+      state.label = action.payload;
+    },
   },
 });
 
@@ -42,6 +53,9 @@ export const {
   setNutrient,
   setHarvestTime,
   setPlantingTime,
+  setCountry,
+  setLabel,
+  setFarmDetails,
 } = predictionSlice.actions;
 
 export default predictionSlice.reducer;

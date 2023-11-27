@@ -105,11 +105,11 @@ export const recommendations = [
   },
   {
     icon: "/dashboard_images/maize.svg",
-    text: "Consider irrigating before planting",
+    text: "Optimal Rice harvesting expected in April",
   },
   {
     icon: "/dashboard_images/maize.svg",
-    text: "Consider irrigating before planting",
+    text: "Rain expected in the next 48 hours; consider delaying planting",
   },
 ];
 
@@ -150,3 +150,45 @@ export const startedData = [
     body: "Take advantage of special limited-time offers available only to those who get started early. Unlock premium features at discounted rates.",
   },
 ];
+
+// export const crop = [
+//   "rice",
+//   "maize",
+//   "chickpea",
+//   "kidneybeans",
+//   "pigeonpeas",
+//   "mothbeans",
+//   "mungbean",
+//   "blackgram",
+//   "lentil",
+//   "watermelon",
+//   "muskmelon",
+//   "cotton",
+//   "jute",
+// ];
+export const crops = [
+  { value: "rice", text: "Rice" },
+  { value: "maize", text: "Maize" },
+  { value: "chickpea", text: "Chickpea" },
+  { value: "kidneybeans", text: "Kidney Beans" },
+  { value: "pigeonpeas", text: "Pigeon Peas" },
+  { value: "mothbeans", text: "Moth Beans" },
+  { value: "mungbean", text: "Mung Bean" },
+  { value: "blackgram", text: "Black Gram" },
+  { value: "lentil", text: "Lentil" },
+  { value: "watermelon", text: "Watermelon" },
+  { value: "muskmelon", text: "Musk Melon" },
+  { value: "cotton", text: "Cotton" },
+  { value: "jute", text: "Jute" },
+];
+
+export const locations = ["Nigeria", "South Africa", "Kenya", "Sudan"];
+// export const location = [
+//   {
+//     value: " Nigeria",
+//     text: " Nigeria",
+//   },
+//   { value: "South Africa", text: "South Africa" },
+//   { value: "Kenya", text: "Kenya" },
+//   { value: "Sudan", text: "Sudan" },
+// ];
