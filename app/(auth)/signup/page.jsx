@@ -1,15 +1,17 @@
 "use client";
 
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
-import React, { useState } from "react";
 import Image from "next/image";
 import logo from "../../../public/auth_images/logo.png";
 import overlay from "../../../public/auth_images/overlay.svg";
-import { useDispatch } from "react-redux";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { signUp } from "../../redux/slices/authSlice";
+import { NEXT_CACHE_REVALIDATE_TAG_TOKEN_HEADER } from "next/dist/lib/constants";
 
 export default function Signup() {
   const dispatch = useDispatch();
@@ -20,6 +22,10 @@ export default function Signup() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const fullname = useSelector((state) => state.auth.name);
+  const useremail = useSelector((state) => state.auth.email);
+  const token = useSelector((state) => state.auth.token);
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -46,35 +52,38 @@ export default function Signup() {
       }
       const response = await axios.post(
         "https://farm-fuse-backend.vercel.app/api/register",
-        { name, email, password }
+        {
+          email,
+          name,
+          password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
 
       const json = response.data;
 
-      console.log(json);
-
-      if (response.status === 409) {
-        setIsLoading(false);
-        toast.error("Email already exists");
-        return;
-      }
-
-      if (response.status === 200) {
-        dispatch(setName(name));
-        setIsLoading(false);
+      // Check for a successful registration status code (e.g., 201 or 200)
+      if (response.status === 201 || response.status === 200) {
+        dispatch(signUp({ name, email, token: json.token }));
         toast.success("Account created successfully");
+        router.push("/login");
       } else {
-        setIsLoading(false);
-        setError(json.error);
+        setError(json.error.message || "An error occurred");
       }
       router.push("/success");
     } catch (error) {
-      setError(error.message);
-      // toast.error(error.message);
+      setError(error.message || "An error occurred");
     } finally {
       setIsLoading(false);
     }
   };
+  console.log(
+    `fullname is: ${fullname}, useremail is: ${useremail}, token is: ${token}  ${name}`
+  );
 
   return (
     <main className="bg-accent-1  h-screen w-full">
@@ -84,7 +93,7 @@ export default function Signup() {
             <Image src={logo} alt="logo" width={50} height={50} />
           </Link>
           <h4 className="text-2xl text-black-3 py-[50px]">Sign Up</h4>
-          <form>
+          <form onSubmit={handleRegister}>
             <div className="flex flex-col gap-10 justify-between mt-5">
               <div className="flex flex-wrap justify-between">
                 <div className="w-full">
@@ -97,6 +106,7 @@ export default function Signup() {
                     name="name"
                     autoComplete="name"
                     onChange={(e) => setName(e.target.value)}
+                    required
                   />
                 </div>
               </div>
@@ -110,6 +120,7 @@ export default function Signup() {
                   name="email"
                   autoComplete="email"
                   onChange={(e) => setEmail(e.target.value)}
+                  required
                 />
               </div>
               <div className="grid lg:grid-cols-2 gap-10">
@@ -123,6 +134,7 @@ export default function Signup() {
                     name="password"
                     autoComplete="password"
                     onChange={(e) => setPassword(e.target.value)}
+                    required
                   />
                 </div>
                 <div className="mt-2 lg:mt-0">
@@ -137,6 +149,7 @@ export default function Signup() {
                     name="confirmPassword"
                     autoComplete="password"
                     onChange={(e) => setConfirmPassword(e.target.value)}
+                    required
                   />
                 </div>
               </div>
@@ -150,12 +163,13 @@ export default function Signup() {
             </div>
             <div className="flex flex-wrap justify-center mb-5 mt-3">
               <button
-                onClick={handleRegister}
-                className={
+                type="submit"
+                className={`${
                   isLoading
-                    ? " bg-green-200 rounded-md text-white p-2 px-10 font-bold mb-5"
+                    ? "bg-green-200 rounded-md text-white p-2 px-10 font-bold mb-5"
                     : "bg-primary rounded-md text-white p-2 px-10 font-bold mb-5"
-                }
+                }`}
+                disabled={isLoading}
               >
                 {isLoading ? "Creating..." : "Create Account"}
               </button>

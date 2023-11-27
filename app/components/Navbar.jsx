@@ -8,17 +8,20 @@ import Slider from "./homepage_components/Slider";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoCloseSharp } from "react-icons/io5";
 import { useRouter } from "next/navigation";
+import { logout } from "../redux/slices/authSlice";
+import { useDispatch } from "react-redux";
 
 export default function Navbar() {
+  const dispatch = useDispatch();
   const [showMenu, setShowMenu] = React.useState(false);
   const router = useRouter();
 
   const handleLogout = (e) => {
     e.preventDefault();
 
-    // localStorage.removeItem("username");
-    console.log("user logged out");
+    dispatch(logout());
     router.push("/login");
+    console.log("User logged out");
   };
 
   const handleShow = () => {
