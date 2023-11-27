@@ -6,12 +6,11 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "../../../public/auth_images/logo.png";
-import overlay from "../../../public/auth_images/overlay.svg";
+import { signUp } from "../../redux/slices/authSlice";
 import axios from "axios";
+import overlay from "../../../public/auth_images/overlay.svg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { signUp } from "../../redux/slices/authSlice";
-import { NEXT_CACHE_REVALIDATE_TAG_TOKEN_HEADER } from "next/dist/lib/constants";
 
 export default function Signup() {
   const dispatch = useDispatch();
@@ -74,8 +73,8 @@ export default function Signup() {
       } else {
         setError(json.error.message || "An error occurred");
       }
-      router.push("/success");
     } catch (error) {
+      setError(error.message);
       setError(error.message || "An error occurred");
     } finally {
       setIsLoading(false);

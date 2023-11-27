@@ -24,6 +24,7 @@ export default function Navbar() {
     console.log("User logged out");
   };
 
+
   const handleShow = () => {
     setShowMenu(!showMenu);
   };

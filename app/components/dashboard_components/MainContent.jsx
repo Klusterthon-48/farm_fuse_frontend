@@ -10,11 +10,12 @@ import {
   FaGlassWaterDroplet,
   FaPlantWilt,
 } from "react-icons/fa6";
+
 import { FiEdit3 } from "react-icons/fi";
+import { useSelector } from "react-redux";
 import FarmDetailsModal from "../dashboard_components/FarmDetailsModal";
 import Schedule from "../utils/Schedule";
-
-import { useSelector } from "react-redux";
+// import { SunnyCloud } from "../../../public/dashboard_images/sunny-cloud.svg";
 import {
   harvestingScheduleData,
   plantingScheduleData,
@@ -26,6 +27,13 @@ export default function MainContent() {
   const phPercentage = 70;
   const nutrientPercentage = 50;
 
+  const ph = useSelector((state) => state.prediction.ph);
+  const temperature = useSelector((state) => state.prediction.temperature);
+  const soilMoisture = useSelector((state) => state.prediction.soilMoisture);
+  const nutrients = useSelector((state) => state.prediction.nutrients);
+  const plantingTime = useSelector((state) => state.prediction.plantingTime);
+  const harvestTime = useSelector((state) => state.prediction.harvestTime);
+
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const handleFarmDetails = () => {
@@ -35,37 +43,15 @@ export default function MainContent() {
   const handleClosePopup = () => {
     setIsPopupOpen(false);
   };
-  const token = useSelector((state) => state.auth.token);
-  const handlePredict = async (e) => {
-    e.preventDefault();
 
-    try {
-      setIsLoading(true);
-      setError(null);
-
-      const response = await axios.post(
-        "https://farm-fuse-backend.vercel.app/api/predict",
-        {
-          label,
-          location,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      const data = response.json();
-
-      // Handle the response as needed, for example:
-      console.log("Prediction result:", data);
-    } catch (error) {
-      setError(error.message || "An error occurred");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  console.log(
+    temperature,
+    ph,
+    soilMoisture,
+    nutrients,
+    plantingTime,
+    harvestTime
+  );
 
   return (
     <div className="main-content text-black-3">
